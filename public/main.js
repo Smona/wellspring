@@ -31,15 +31,20 @@ var player, ground;
 game.state.add('level1', {
   preload: function () {
     game.load.image('player', 'sprites/player.jpg');
-    game.load.image('well_bottom', 'sprites/well_bottom.png');
+    game.load.image('platform', 'sprites/well_bottom.png');
   },
   create: function () {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     applyGameSettings();
-    player = new Player(game.world.centerX, height - 20);
-    ground = game.add.sprite(0, height * 0.9, 'well_bottom');
+    ground = game.add.sprite(0, height * 0.7, 'platform');
     game.physics.enable(ground, Phaser.Physics.ARCADE);
     ground.body.immovable = true;
+    ground.body.checkCollision = {
+      top: true,
+      bottom: false, left: false, right: false
+    };
+
+    player = new Player(game.world.centerX, height - 20);
   },
   update: function() {
     game.physics.arcade.collide(player.sprite, ground);
