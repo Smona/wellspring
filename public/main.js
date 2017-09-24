@@ -7,6 +7,7 @@ var textStyle = {
 };
 
 function applyGameSettings() {
+  // Dynamically resize game canvas
   game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 }
 
@@ -32,6 +33,7 @@ game.state.add('level1', {
     game.load.image('player', 'sprites/player.jpg');
   },
   create: function () {
+    game.physics.startSystem(Phaser.Physics.ARCADE);
     applyGameSettings();
     player = new Player(game.world.centerX, height - 20);
   },
