@@ -1,5 +1,6 @@
 # wellspring
-A browser-based game, written in phaser by some UT students
+A browser-based game, written in phaser by some UT students. You can play
+the game in its current state [here](public/).
 
 ## Setup
 
