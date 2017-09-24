@@ -6,9 +6,13 @@ var textStyle = {
   fill: 'white'
 };
 
+function applyGameSettings() {
+  game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+}
+
 game.state.add('menu', {
   create: function () {
-    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    applyGameSettings();
     var title = game.add.text(width / 2, height / 2, 'WELLSPRING', Object.assign(textStyle, {
       fontSize: '120px',
     }));
@@ -21,10 +25,19 @@ game.state.add('menu', {
   }
 });
 
+var player;
+
 game.state.add('level1', {
+  preload: function () {
+    game.load.image('player', 'sprites/player.jpg');
+  },
   create: function () {
-    game.add.text(game.world.centerX, game.world.centerY, 'Level 1', textStyle);
+    applyGameSettings();
+    player = new Player(game.world.centerX, height - 20);
+  },
+  update: function() {
+    player.readInput();
   }
 });
 
-game.state.start('menu');
+game.state.start('level1');
