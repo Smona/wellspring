@@ -1,9 +1,11 @@
 function Player(x, y) {
   this.baseSpeed = 500;
   this.jumpPower = 1000;
+  this.scale = 0.1;
   this.sprite = game.add.sprite(x, y, 'player');
   this.sprite.anchor.x = 0.5;
   this.sprite.anchor.y = 1;
+  this.sprite.scale.setTo(this.scale);
 
   // Physics
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
@@ -38,8 +40,10 @@ Player.prototype.readInput = function () {
   }
   if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
     this.sprite.body.velocity.x -= this.speed;
+    this.sprite.scale.setTo(this.scale, this.scale);
   }
   if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
     this.sprite.body.velocity.x += this.speed;
+    this.sprite.scale.setTo(-this.scale, this.scale);
   }
 };

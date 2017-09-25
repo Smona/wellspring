@@ -30,7 +30,8 @@ var player, ground;
 
 game.state.add('level1', {
   preload: function () {
-    game.load.image('player', 'sprites/player.jpg');
+    // game.load.image('player', 'sprites/player.jpg');
+    game.load.spritesheet('player', 'sprites/player.png', 1311, 2194);
     game.load.image('platform', 'sprites/well_bottom.png');
   },
   create: function () {
