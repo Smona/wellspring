@@ -1,6 +1,6 @@
 function Player(x, y) {
-  this.baseSpeed = 500;
-  this.jumpPower = 1000;
+  this.baseSpeed = 400;
+  this.jumpPower = 800;
   this.scale = 0.05;
   this.sprite = game.add.sprite(x, y, 'player');
   this.sprite.anchor.x = 0.5;
@@ -36,15 +36,25 @@ Object.defineProperties(Player.prototype, {
 Player.prototype.readInput = function () {
   // Player is standing on ground
   if (this.onGround) {
+    // Friction
     this.sprite.body.velocity.x = 0;
+
+    // Jumping
     if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
       this.sprite.body.velocity.y = -this.jumpPower;
     }
+    // Climbing down from a ledge
+    if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
+      this.sprite.y += 20;
+    }
   }
+
+  // Running Left
   if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
     this.sprite.body.velocity.x -= this.speed;
     this.sprite.scale.setTo(-this.scale, this.scale);
   }
+  // Running Right
   if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
     this.sprite.body.velocity.x += this.speed;
     this.sprite.scale.setTo(this.scale, this.scale);
