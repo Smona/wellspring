@@ -32,9 +32,20 @@ game.state.add('level1', {
   preload: function () {
     // game.load.image('player', 'sprites/player.jpg');
     game.load.spritesheet('player', 'sprites/player.png', 1311, 2194);
+    game.load.tilemap('level1','tilemaps/level1.json',null,Phaser.Tilemap.TILED_JSON);
+    game.load.image('ledgeTiles','tilemaps/ledgeTile.png');
+    game.load.image('wellTiles','tilemaps/wellTile.png');
     game.load.image('platform', 'sprites/well_bottom.png');
+    
   },
   create: function () {
+    var map = game.add.tilemap('level1');
+    map.addTilesetImage('ledgeTiles');
+    map.addTilesetImage('wellTiles');
+        
+    var wellTiles = map.createLayer('wellTiles'); 
+    rocks = map.createLayer('ledgeTiles');
+      
     game.physics.startSystem(Phaser.Physics.ARCADE);
     applyGameSettings();
     ground = game.add.sprite(0, height * 0.7, 'platform');
