@@ -3,6 +3,10 @@
     margin: 0;
 }
 
+html {
+    background: #442b4c;
+}
+
 #game-root {
     display: flex;
     justify-content: center;

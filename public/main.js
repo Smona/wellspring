@@ -67,4 +67,4 @@ game.state.add('level1', {
   }
 });
 
-game.state.start('level1');
+game.state.start('menu');
