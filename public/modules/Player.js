@@ -43,11 +43,11 @@ Player.prototype.readInput = function () {
   }
   if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
     this.sprite.body.velocity.x -= this.speed;
-    this.sprite.scale.setTo(this.scale, this.scale);
+    this.sprite.scale.setTo(-this.scale, this.scale);
   }
   if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
     this.sprite.body.velocity.x += this.speed;
-    this.sprite.scale.setTo(-this.scale, this.scale);
+    this.sprite.scale.setTo(this.scale, this.scale);
   }
   if (Math.abs(this.sprite.body.velocity.x) > 0.1 && this.onGround) {
     this.sprite.animations.play('run', 15, true);

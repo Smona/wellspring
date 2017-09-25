@@ -40,7 +40,7 @@ game.state.add('level1', {
     game.world.setBounds(0, 0, world.width, world.height);
 
     var tilemapURL = 'tilemaps/level1.json';
-    game.load.spritesheet('player', 'sprites/player.png', 1311, 2194);
+    game.load.spritesheet('player', 'sprites/player.png', 1293, 2206);
     game.load.tilemap('level1', tilemapURL,null,Phaser.Tilemap.TILED_JSON);
     game.load.image('ledgeTile','tilemaps/ledgeTile.png');
     game.load.image('wellTile','tilemaps/wellTile.png');
