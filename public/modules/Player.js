@@ -12,6 +12,9 @@ function Player(x, y) {
   this.sprite.body.collideWorldBounds = true;
   this.sprite.body.gravity.y = 1500;
   this.sprite.body.maxVelocity.x = this.baseSpeed;
+
+  // Animations
+  this.sprite.animations.add('run');
 }
 
 Object.defineProperties(Player.prototype, {
@@ -45,5 +48,10 @@ Player.prototype.readInput = function () {
   if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
     this.sprite.body.velocity.x += this.speed;
     this.sprite.scale.setTo(-this.scale, this.scale);
+  }
+  if (Math.abs(this.sprite.body.velocity.x) > 0.1 && this.onGround) {
+    this.sprite.animations.play('run', 15, true);
+  } else {
+    this.sprite.animations.stop('run', 0);
   }
 };

@@ -19,7 +19,7 @@ game.state.add('menu', {
     }));
     title.anchor.set(0.5);
 
-    var startButton = game.add.button(width / 2, height * 0.7, 'START', startGame)
+    var startButton = game.add.button(width / 2, height * 0.7, 'START', startGame);
     function startGame() {
       game.state.start('level1');
     }
