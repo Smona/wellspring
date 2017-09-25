@@ -11,3 +11,5 @@ In order to set up the project for development:
 2. run `yarn` to install the dependencies.
 3. `yarn start` will serve the project and open it in your browser. You're
 good to go!
+4. `yarn build` will zip up the contents of the public folder and place them
+in a "build" directory.

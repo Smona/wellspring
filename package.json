@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "http-server -o"
+    "start": "http-server -o",
+    "build": "rm -rf build/ && mkdir build && zip -r build/wellspring public/"
   },
   "dependencies": {
     "http-server": "^0.10.0"
