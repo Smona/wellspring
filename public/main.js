@@ -62,9 +62,18 @@ game.state.add('level1', {
   },
   update: function() {
     game.camera.follow(player.sprite);
-    game.physics.arcade.collide(player.sprite, ledges);
+    game.physics.arcade.collide(player.sprite, ledges, null, function (player, ledge) {
+      if (i < 5) {
+        if (ledge.collides) i++;
+        // console.log('player: ', player.position.y - player.body.height * player., player.body.height, player.anchor.y)
+        // console.log('ledge', ledge.worldY - ledge.height, ledge.height)
+        console.log(ledge.collides)
+      }
+      return ledge.collides &&
+        player.position.y - player.body.height * player.anchor.y <= ledge.worldY - ledge.height;
+    });
     player.readInput();
   }
 });
 
-game.state.start('menu');
+game.state.start('level1');
