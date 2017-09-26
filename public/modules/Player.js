@@ -12,6 +12,8 @@ function Player(x, y) {
   this.sprite.body.collideWorldBounds = true;
   this.sprite.body.gravity.y = 1500;
   this.sprite.body.maxVelocity.x = this.baseSpeed;
+  var shrinkBodyWidth = 400;
+  this.sprite.body.setSize(1293 - shrinkBodyWidth, 2100, shrinkBodyWidth / 2);
 
   // Animations
   this.sprite.animations.add('run');

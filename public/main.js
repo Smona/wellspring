@@ -65,7 +65,7 @@ game.state.add('level1', {
     game.physics.arcade.collide(player.sprite, ledges, null, function (player, ledge) {
       // Allows the player to jump through the bottom of ledges
       return ledge.collides &&
-        player.position.y - player.body.height * player.anchor.y <= ledge.worldY - ledge.height + 5;
+        player.position.y - player.body.height * player.anchor.y <= ledge.worldY - ledge.height + 10;
     });
     player.readInput();
   }
