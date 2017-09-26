@@ -11,15 +11,21 @@
     <link rel="stylesheet" href="styles.css">
 
     <!-- minified Phaser runtime -->
-    <script defer src="phaser.js"></script>
+    <script src="phaser.js"></script>
     <!-- game files -->
-    <script defer src="modules/Player.js"></script>
-    <script defer src="modules/states/Boot.js"></script>
-    <script defer src="modules/states/Menu.js"></script>
-    <script defer src="modules/states/LevelOne.js"></script>
-    <script defer src="main.js"></script>
+    <script src="modules/Player.js"></script>
+    <script src="modules/states/Boot.js"></script>
+    <script src="modules/states/Preload.js"></script>
+    <script src="modules/states/Menu.js"></script>
+    <script src="modules/states/LevelOne.js"></script>
+    <script src="main.js"></script>
   </head>
-  <body>
-    <div id="game-root"></div>
+  <body class="loading">
+    <div id="game-root">
+      <!-- displayed while js is loading -->
+      <div id="loading-text">
+        Loading....
+      </div>
+    </div>
   </body>
 </html>

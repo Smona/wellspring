@@ -12,11 +12,20 @@ function Player(x, y) {
   this.sprite.body.collideWorldBounds = true;
   this.sprite.body.gravity.y = 1500;
   this.sprite.body.maxVelocity.x = this.baseSpeed;
+  // Adjust body size to width of legs
   var shrinkBodyWidth = 400;
   this.sprite.body.setSize(1293 - shrinkBodyWidth, 2100, shrinkBodyWidth / 2);
+  // Prevent falling through ledges
+  this.sprite.body.tilePadding.y = 20;
+  this.falling = false;
 
   // Animations
   this.sprite.animations.add('run');
+
+  // Sounds
+  this.sounds = {
+    fall: game.add.audio('grassFall')
+  }
 }
 
 Object.defineProperties(Player.prototype, {
@@ -40,11 +49,19 @@ Object.defineProperties(Player.prototype, {
   }
 });
 
-Player.prototype.readInput = function () {
+Player.prototype.update = function () {
+  if (this.sprite.body.velocity.y > 2) {
+    this.falling = true;
+  }
   // Player is standing on ground
   if (this.onGround) {
     // Friction
     this.sprite.body.velocity.x = 0;
+
+    if (this.falling) {
+      this.falling = false;
+      this.play('fall', 0.2);
+    }
 
     // Jumping
     if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
@@ -71,4 +88,8 @@ Player.prototype.readInput = function () {
   } else {
     this.sprite.animations.stop('run', 0);
   }
+};
+
+Player.prototype.play = function (key, time) {
+  this.sounds[key].play(null, time);
 };
