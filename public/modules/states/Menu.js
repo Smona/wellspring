@@ -2,10 +2,8 @@ var textStyle = {
   fill: 'white'
 };
 
-menuState = {
+menu = {
   create: function () {
-    // Dynamically resize game canvas
-    game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     var title = game.add.text(camera.width / 2, camera.height / 2, 'WELLSPRING', Object.assign(textStyle, {
       fontSize: '80px',
     }));

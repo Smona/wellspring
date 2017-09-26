@@ -20,8 +20,6 @@ levelOne = {
     ledges = map.createLayer('ledgeTiles');
     map.setCollisionBetween(2, 9, true, 'ledgeTiles');
 
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-
     player = new Player(game.world.centerX, game.world.height - 100);
   },
   update: function() {

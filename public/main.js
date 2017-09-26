@@ -8,7 +8,8 @@ var camera = {
 };
 var game = new Phaser.Game(camera.width, camera.height, Phaser.AUTO, 'game-root');
 
-game.state.add('menu', menuState);
+game.state.add('boot', boot);
+game.state.add('menu', menu);
 game.state.add('level1', levelOne);
 
-game.state.start('level1');
+game.state.start('boot');
