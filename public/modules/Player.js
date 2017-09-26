@@ -1,7 +1,7 @@
 function Player(x, y) {
   this.baseSpeed = 400;
   this.jumpPower = 800;
-  this.scale = 0.05;
+  this.scale = 0.04;
   this.sprite = game.add.sprite(x, y, 'player');
   this.sprite.anchor.x = 0.5;
   this.sprite.anchor.y = 1;
@@ -31,6 +31,11 @@ Object.defineProperties(Player.prototype, {
     get: function () {
       // Move slower in the air
       return this.baseSpeed * (this.onGround ? 1 : 0.05);
+    }
+  },
+  x: {
+    get: function () {
+      return this.sprite.x;
     }
   }
 });
