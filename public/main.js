@@ -3,8 +3,8 @@ var world = {
   height: 3200,
 };
 var camera = {
-  width: 640,
-  height: 400,
+  width: 420,
+  height: 300,
 };
 var startState = 'level1';
 

@@ -10,7 +10,7 @@ function Player(x, y) {
   // Physics
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
   this.sprite.body.gravity.y = 1500;
-  this.sprite.body.maxVelocity.x = this.baseSpeed;
+  this.sprite.body.maxVelocity.setTo(this.baseSpeed, 800);
   // Adjust body size to width of legs
   var shrinkBodyWidth = 400;
   this.sprite.body.setSize(1293 - shrinkBodyWidth, 2100, shrinkBodyWidth / 2);
