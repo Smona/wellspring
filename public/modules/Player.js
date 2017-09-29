@@ -1,7 +1,7 @@
 function Player(x, y) {
   this.baseSpeed = 400;
   this.jumpPower = 800;
-  this.scale = 0.04;
+  this.scale = 0.03;
   this.sprite = game.add.sprite(x, y, 'player');
   this.sprite.anchor.x = 0.5;
   this.sprite.anchor.y = 1;
@@ -9,7 +9,6 @@ function Player(x, y) {
 
   // Physics
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-  this.sprite.body.collideWorldBounds = true;
   this.sprite.body.gravity.y = 1500;
   this.sprite.body.maxVelocity.x = this.baseSpeed;
   // Adjust body size to width of legs

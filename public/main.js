@@ -4,7 +4,7 @@ var world = {
 };
 var camera = {
   width: 640,
-  height: 500,
+  height: 400,
 };
 var startState = 'level1';
 

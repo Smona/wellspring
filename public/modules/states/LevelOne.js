@@ -3,6 +3,7 @@ var player, ledges, map, tilemap = 0;
 levelOne = {
   preload: function () {
     game.world.setBounds(0, 0, world.width, world.height);
+    this.game.time.advancedTiming = true; // enables fps monitoring
   },
   create: function () {
     game.camera.setPosition(game.world.centerX, game.world.height - camera.height / 2);
@@ -24,6 +25,14 @@ levelOne = {
         playerSprite.position.y - playerSprite.body.height * playerSprite.anchor.y <=
           ledge.worldY - ledge.height + 10;
     });
+    if (player.x > game.world.width) {
+      player.sprite.x = 0;
+    } else if (player.x < 0) {
+      player.sprite.x = game.world.width;
+    }
     player.update();
+  },
+  render: function () {
+    // this.game.debug.text(this.game.time.fps || '--', 20, 70, "#00ff00", "40px Courier");
   }
 };
