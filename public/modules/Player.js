@@ -1,5 +1,5 @@
 function Player(x, y) {
-  this.baseSpeed = 400;
+  this.baseSpeed = 350;
   this.jumpPower = 800;
   this.scale = 0.03;
   this.sprite = game.add.sprite(x, y, 'player');
@@ -24,7 +24,7 @@ function Player(x, y) {
   // Sounds
   this.sounds = {
     fall: game.add.audio('grassFall')
-  }
+  };
 }
 
 Object.defineProperties(Player.prototype, {
@@ -55,8 +55,9 @@ Player.prototype.update = function () {
   // Player is standing on ground
   if (this.onGround) {
     // Friction
-    this.sprite.body.velocity.x = 0;
+    this.sprite.body.drag.x = 2000;
 
+    // Hitting the ground
     if (this.falling) {
       this.falling = false;
       this.play('fall', 0.2);
@@ -70,6 +71,9 @@ Player.prototype.update = function () {
     if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
       this.sprite.y += 20;
     }
+  } else { // player is in the air
+    // Lack of Friction
+    this.sprite.body.drag.x = 100;
   }
 
   // Running Left
