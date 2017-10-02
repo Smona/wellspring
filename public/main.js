@@ -1,5 +1,5 @@
 var world = {
-  width: 640,
+  width: 640 * 3,
   height: 3200,
 };
 var camera = {

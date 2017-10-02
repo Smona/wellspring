@@ -6,7 +6,6 @@ levelOne = {
     this.game.time.advancedTiming = true; // enables fps monitoring
   },
   create: function () {
-    game.camera.setPosition(game.world.centerX, game.world.height - camera.height / 2);
     map = game.add.tilemap('level1');
     map.addTilesetImage('ledgeTile');
     map.addTilesetImage('wellTile');
@@ -25,10 +24,12 @@ levelOne = {
         playerSprite.position.y - playerSprite.body.height * playerSprite.anchor.y <=
           ledge.worldY - ledge.height + 10;
     });
-    if (player.x > game.world.width) {
-      player.sprite.x = 0;
-    } else if (player.x < 0) {
-      player.sprite.x = game.world.width;
+
+    // World Wrapping
+    if (player.x > world.width / 3 * 2) {
+      player.sprite.x = world.width / 3;
+    } else if (player.x < world.width / 3) {
+      player.sprite.x = world.width / 3 * 2;
     }
     player.update();
   },
