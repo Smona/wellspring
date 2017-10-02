@@ -11,6 +11,7 @@ var preload = {
     game.load.image('wellTile','tilemaps/wellTile.png');
 
     game.load.audio('grassFall', 'audio/grass_fall.mp3');
+    game.load.audio('grassStep', 'audio/grass_step.mp3')
   },
   create: function () {
     game.state.start(startState);

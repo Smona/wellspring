@@ -26,7 +26,8 @@ function Player(x, y) {
 
   // Sounds
   this.sounds = {
-    fall: game.add.audio('grassFall')
+    fall: game.add.audio('grassFall'),
+    step: game.add.audio('grassStep', 0.1),
   };
 }
 
@@ -51,8 +52,19 @@ Object.defineProperties(Player.prototype, {
   }
 });
 
+var stepSoundWaiting = false;
+var stepDelay = 200;
+function stepSoundLoop() {
+  if (!stepSoundWaiting) {
+    this.play('step');
+    stepSoundWaiting = true;
+    setTimeout(function () {
+      stepSoundWaiting = false;
+    }, stepDelay)
+  }
+}
 Player.prototype.update = function () {
-  if (this.sprite.body.velocity.y > 300) {
+  if (this.sprite.body.velocity.y > 500) {
     this.falling = true;
     this.sprite.animations.play('jump');
   }
@@ -70,6 +82,7 @@ Player.prototype.update = function () {
     // On-ground animations
     if (Math.abs(this.sprite.body.velocity.x) > 0.1) {
       this.sprite.animations.play('run');
+      stepSoundLoop.call(this);
     } else {
       this.sprite.animations.play('rest');
     }
