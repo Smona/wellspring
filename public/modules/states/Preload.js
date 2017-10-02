@@ -5,7 +5,7 @@ var preload = {
     preloadBar.scale.setTo(0.5);
     game.load.setPreloadSprite(preloadBar);
 
-    game.load.spritesheet('player', 'sprites/player.png', 1293, 2206);
+    game.load.spritesheet('player', 'sprites/Player.png', 328, 529);
     game.load.tilemap('level1', 'tilemaps/level1.json',null,Phaser.Tilemap.TILED_JSON);
     game.load.image('ledgeTile','tilemaps/ledgeTile.png');
     game.load.image('wellTile','tilemaps/wellTile.png');
