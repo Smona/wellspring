@@ -1,7 +1,7 @@
 function Player(x, y) {
   this.baseSpeed = 350;
   this.jumpPower = 800;
-  this.scale = 0.1;
+  this.scale = 0.08;
   this.sprite = game.add.sprite(x, y, 'player');
   this.sprite.anchor.x = 0.5;
   this.sprite.anchor.y = 1;
@@ -13,14 +13,14 @@ function Player(x, y) {
   this.sprite.body.maxVelocity.setTo(this.baseSpeed, 800);
   // Adjust body size to width of legs
   var shrinkBodyWidth = 100;
-  this.sprite.body.setSize(328 - shrinkBodyWidth, 529, shrinkBodyWidth / 2);
+  this.sprite.body.setSize(328 - shrinkBodyWidth, 529, shrinkBodyWidth / 2, -150);
   // Prevent falling through ledges
   this.sprite.body.tilePadding.y = 20;
   this.falling = false;
 
   // Animations
   var playbackRate = 15;
-  this.sprite.animations.add('rest', [0,1], 2, true);
+  this.sprite.animations.add('rest', [0,1], 1, true);
   this.sprite.animations.add('run', [2,3,4,5,6,7], playbackRate, true);
   this.sprite.animations.add('jump', [8,9,10,11], 20);
 
