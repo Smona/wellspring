@@ -88,12 +88,12 @@ Player.prototype.update = function () {
     }
 
     // Jumping
-    if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+    if (cursors.up.isDown) {
       this.sprite.body.velocity.y = -this.jumpPower;
       this.sprite.animations.play('jump');
     }
     // Climbing down from a ledge
-    if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
+    if (cursors.down.isDown) {
       this.sprite.y += 20;
     }
   } else { // player is in the air
@@ -102,12 +102,12 @@ Player.prototype.update = function () {
   }
 
   // Running Left
-  if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
+  if (cursors.left.isDown) {
     this.sprite.body.velocity.x -= this.speed;
     this.sprite.scale.setTo(-this.scale, this.scale);
   }
   // Running Right
-  if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
+  if (cursors.right.isDown) {
     this.sprite.body.velocity.x += this.speed;
     this.sprite.scale.setTo(this.scale, this.scale);
   }
