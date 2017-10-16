@@ -13,6 +13,7 @@ levelOne = {
     var wellTiles = map.createLayer('wellTiles');
     ledges = map.createLayer('ledgeTiles');
     map.setCollisionBetween(2, 9, true, 'ledgeTiles');
+    var vineTiles = map.createLayer('vineTiles');
 
     player = new Player(game.world.centerX, game.world.height - 30);
 
