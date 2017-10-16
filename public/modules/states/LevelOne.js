@@ -78,7 +78,7 @@ levelOne = {
       // Allows the player to jump through the bottom of ledges
       return ledge.collides &&
         playerSprite.position.y - playerSprite.body.height * playerSprite.anchor.y <=
-          ledge.worldY - ledge.height + 10;
+          ledge.worldY - ledge.height + 40;
     });
     game.physics.arcade.collide(player.sprite, vines);
 
