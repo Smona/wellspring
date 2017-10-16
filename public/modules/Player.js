@@ -1,7 +1,10 @@
+var msToGrabVine = 300;
+
 function Player(x, y) {
   this.baseSpeed = 350;
   this.jumpPower = 800;
   this.scale = 0.08;
+  this.gravity = 1500;
   this.sprite = game.add.sprite(x, y, 'player');
   this.sprite.anchor.x = 0.5;
   this.sprite.anchor.y = 1;
@@ -9,20 +12,32 @@ function Player(x, y) {
 
   // Physics
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-  this.sprite.body.gravity.y = 1500;
-  this.sprite.body.maxVelocity.setTo(this.baseSpeed, 800);
+  this.sprite.body.gravity.y = this.gravity;
   // Adjust body size to width of legs
   var shrinkBodyWidth = 100;
   this.sprite.body.setSize(328 - shrinkBodyWidth, 529, shrinkBodyWidth / 2, -150);
   // Prevent falling through ledges
   this.sprite.body.tilePadding.y = 20;
   this.falling = false;
+  this.onVines = false;
+  this.climbingVines = false;
+  this.lastTimeJumpPressed = game.time.now;
+  cursors.up.onDown.add(function updateTime() {
+    console.log(game.time.now - this.lastTimeJumpPressed);
+    if (this.climbingVines && game.time.now - this.lastTimeJumpPressed < msToGrabVine) {
+      console.log('jumping');
+      this.climbingVines = false;
+      this.jump();
+    }
+    this.lastTimeJumpPressed = game.time.now;
+  }, this);
 
   // Animations
   var playbackRate = 15;
   this.sprite.animations.add('rest', [0,1], 1, true);
   this.sprite.animations.add('run', [2,3,4,5,6,7], playbackRate, true);
   this.sprite.animations.add('jump', [8,9,10,11], 20);
+  this.sprite.animations.add('climb', [12,13,14,15], 5, true);
 
   // Sounds
   this.sounds = {
@@ -42,7 +57,7 @@ Object.defineProperties(Player.prototype, {
   speed: {
     get: function () {
       // Move slower in the air
-      return this.baseSpeed * (this.onGround ? 1 : 0.05);
+      return this.baseSpeed * (this.onGround || this.climbingVines ? 1 : 0.05);
     }
   },
   x: {
@@ -56,7 +71,7 @@ var stepSoundWaiting = false;
 var stepDelay = 200;
 function stepSoundLoop() {
   if (!stepSoundWaiting) {
-    this.play('step');
+    this.playSound('step');
     stepSoundWaiting = true;
     setTimeout(function () {
       stepSoundWaiting = false;
@@ -64,19 +79,26 @@ function stepSoundLoop() {
   }
 }
 Player.prototype.update = function () {
+  this.sprite.body.maxVelocity.setTo(this.baseSpeed, 800);
   if (this.sprite.body.velocity.y > 500) {
     this.falling = true;
     this.sprite.animations.play('jump');
   }
   // Player is standing on ground
   if (this.onGround) {
+    // Stop climbing vines
+    if (this.climbingVines) {
+      this.climbingVines = false;
+      this.sprite.position.y -= 32;
+    }
+
     // Friction
     this.sprite.body.drag.x = 2000;
 
     // Hitting the ground
     if (this.falling) {
       this.falling = false;
-      this.play('fall', 0.2);
+      this.playSound('fall', 0.2);
     }
 
     // On-ground animations
@@ -89,12 +111,12 @@ Player.prototype.update = function () {
 
     // Jumping
     if (cursors.up.isDown) {
-      this.sprite.body.velocity.y = -this.jumpPower;
-      this.sprite.animations.play('jump');
+      this.jump();
     }
     // Climbing down from a ledge
+    // TODO: disable for checkpoints
     if (cursors.down.isDown) {
-      this.sprite.y += 20;
+      // this.sprite.y += 20;
     }
   } else { // player is in the air
     // Lack of Friction
@@ -111,8 +133,38 @@ Player.prototype.update = function () {
     this.sprite.body.velocity.x += this.speed;
     this.sprite.scale.setTo(this.scale, this.scale);
   }
+  if (this.onVines) {
+    if (cursors.up.isDown) {
+      this.climbingVines = true;
+    }
+  } else {
+    this.climbingVines = false;
+  }
+  if (this.climbingVines) {
+    this.sprite.body.drag.y = 10000;
+    this.sprite.body.drag.x = 2000;
+    var climbingSpeed = 200;
+    this.sprite.body.maxVelocity.y = climbingSpeed;
+    if (cursors.up.isDown) {
+      player.sprite.body.velocity.y -= climbingSpeed;
+      this.sprite.animations.play('climb');
+    } else if (cursors.down.isDown) {
+      player.sprite.body.velocity.y += climbingSpeed;
+      this.sprite.animations.play('climb');
+    } else {
+      this.sprite.animations.stop()
+    }
+  } else {
+    this.sprite.body.drag.y = 0;
+  }
+
 };
 
-Player.prototype.play = function (key, time) {
+Player.prototype.playSound = function (key, time) {
   this.sounds[key].play(null, time);
+};
+
+Player.prototype.jump = function() {
+  this.sprite.body.velocity.y = -this.jumpPower;
+  this.sprite.animations.play('jump');
 };

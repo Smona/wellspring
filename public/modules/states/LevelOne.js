@@ -1,4 +1,4 @@
-var player, ledges, map, tilemap = 0;
+var player, ledges, vines, map;
 
 var world = {
   width: 2048 * 3,
@@ -23,7 +23,18 @@ levelOne = {
     var wellTiles = map.createLayer('wall');
     ledges = map.createLayer('ledge');
     map.setCollisionBetween(270, 275, true, 'ledge');
-    var vineTiles = map.createLayer('vine');
+    vines = map.createLayer('vine');
+    map.setCollisionBetween(1, 7, true, vines);
+    var vineFallTimer;
+    map.setTileIndexCallback([1, 2, 3, 4, 5, 6, 7], function () {
+      if (!!vineFallTimer) {
+        clearTimeout(vineFallTimer);
+      }
+      player.onVines = true;
+      vineFallTimer = setTimeout(function () {
+        player.onVines = false;
+      }, 32);
+    }, game, vines);
 
     player = new Player(game.world.centerX, game.world.height - 70);
 
@@ -69,6 +80,7 @@ levelOne = {
         playerSprite.position.y - playerSprite.body.height * playerSprite.anchor.y <=
           ledge.worldY - ledge.height + 10;
     });
+    game.physics.arcade.collide(player.sprite, vines);
 
     // World Wrapping
     if (player.x > world.width / 3 * 2) {
