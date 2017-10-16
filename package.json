@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "http-server -o",
+    "start": "http-server -o -c-1",
     "triple-maps": "node tools/create-wrapped-tilemap.js tilemaps/level1.json",
     "build": "rm -rf build/ && mkdir build && npm run triple-maps && zip -r build/wellspring public/"
   },
