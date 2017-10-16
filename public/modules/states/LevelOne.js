@@ -9,11 +9,12 @@ levelOne = {
     map = game.add.tilemap('level1');
     map.addTilesetImage('ledgeTile');
     map.addTilesetImage('wallTile');
+    map.addTilesetImage('vineTile');
 
     var wellTiles = map.createLayer('wall');
     ledges = map.createLayer('ledge');
     map.setCollisionBetween(270, 275, true, 'ledge');
-    // var vineTiles = map.createLayer('vine');
+    var vineTiles = map.createLayer('vine');
 
     player = new Player(game.world.centerX, game.world.height - 50);
 
