@@ -25,7 +25,7 @@ levelOne = {
     map.setCollisionBetween(270, 275, true, 'ledge');
     var vineTiles = map.createLayer('vine');
 
-    player = new Player(game.world.centerX, game.world.height - 60);
+    player = new Player(game.world.centerX, game.world.height - 70);
 
     var fragmentSrc = [
       'precision mediump float;',
