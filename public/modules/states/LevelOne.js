@@ -5,8 +5,8 @@ var world = {
   height: 6656,
 };
 var camera = {
-  width: world.width / 3 / 4,
-  height: 300,
+  width: world.width / 3 / 3,
+  height: 400,
 };
 
 levelOne = {

@@ -23,7 +23,9 @@ function Player(x, y) {
   this.climbingVines = false;
   this.lastTimeJumpPressed = game.time.now;
   cursors.up.onDown.add(function updateTime() {
-    console.log(game.time.now - this.lastTimeJumpPressed);
+    if (this.onGround) {
+      this.jump();
+    }
     if (this.climbingVines && game.time.now - this.lastTimeJumpPressed < msToGrabVine) {
       console.log('jumping');
       this.climbingVines = false;
@@ -109,10 +111,6 @@ Player.prototype.update = function () {
       this.sprite.animations.play('rest');
     }
 
-    // Jumping
-    if (cursors.up.isDown) {
-      this.jump();
-    }
     // Climbing down from a ledge
     // TODO: disable for checkpoints
     if (cursors.down.isDown) {
