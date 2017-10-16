@@ -8,14 +8,14 @@ levelOne = {
   create: function () {
     map = game.add.tilemap('level1');
     map.addTilesetImage('ledgeTile');
-    map.addTilesetImage('wellTile');
+    map.addTilesetImage('wallTile');
 
-    var wellTiles = map.createLayer('wellTiles');
-    ledges = map.createLayer('ledgeTiles');
-    map.setCollisionBetween(2, 9, true, 'ledgeTiles');
-    var vineTiles = map.createLayer('vineTiles');
+    var wellTiles = map.createLayer('wall');
+    ledges = map.createLayer('ledge');
+    map.setCollisionBetween(270, 275, true, 'ledge');
+    // var vineTiles = map.createLayer('vine');
 
-    player = new Player(game.world.centerX, game.world.height - 30);
+    player = new Player(game.world.centerX, game.world.height - 50);
 
     var fragmentSrc = [
       'precision mediump float;',

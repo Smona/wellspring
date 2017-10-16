@@ -1,9 +1,9 @@
 var world = {
-  width: 640 * 3,
-  height: 3200,
+  width: 2048 * 3,
+  height: 6656,
 };
 var camera = {
-  width: world.width / 3 / (2 * Math.PI) * 4,
+  width: world.width / 3 / 4,
   height: 300,
 };
 var startState = 'level1';
