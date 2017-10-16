@@ -15,7 +15,7 @@ function Player(x, y) {
   this.sprite.body.gravity.y = this.gravity;
   // Adjust body size to width of legs
   var shrinkBodyWidth = 100;
-  this.sprite.body.setSize(328 - shrinkBodyWidth, 529, shrinkBodyWidth / 2, -150);
+  this.sprite.body.setSize(playerSpriteWidth - shrinkBodyWidth, playerSpriteHeight, shrinkBodyWidth / 2, -150);
   // Prevent falling through ledges
   this.sprite.body.tilePadding.y = 20;
   this.falling = false;

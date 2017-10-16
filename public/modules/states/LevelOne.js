@@ -22,7 +22,7 @@ levelOne = {
 
     var wellTiles = map.createLayer('wall');
     ledges = map.createLayer('ledge');
-    map.setCollisionBetween(270, 275, true, 'ledge');
+    map.setCollisionBetween(269, 277, true, ledges);
     vines = map.createLayer('vine');
     map.setCollisionBetween(1, 7, true, vines);
     var vineFallTimer;
