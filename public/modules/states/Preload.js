@@ -6,7 +6,7 @@ var preload = {
     preloadBar.scale.setTo(0.5);
     game.load.setPreloadSprite(preloadBar);
 
-    playerSpriteWidth = 328;
+    playerSpriteWidth = 659;
     playerSpriteHeight = 648;
     game.load.spritesheet('player', 'sprites/Player.png', playerSpriteWidth, playerSpriteHeight);
     game.load.tilemap('level1', 'tilemaps/level1-tripled.json',null,Phaser.Tilemap.TILED_JSON);
