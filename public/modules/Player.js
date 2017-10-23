@@ -89,6 +89,7 @@ Player.prototype.update = function () {
   this.sprite.body.maxVelocity.setTo(this.baseSpeed, 800);
   if (this.sprite.body.velocity.y > 500) {
     this.falling = true;
+    this.fallingVelocity = this.sprite.body.velocity.y;
     this.sprite.animations.play('jump');
   }
   // Player is standing on ground
@@ -106,7 +107,7 @@ Player.prototype.update = function () {
     if (this.falling) {
       this.falling = false;
       this.playSound('fall', 0.2);
-      game.camera.shake(this.sprite.body.velocity.y * .01)
+      game.camera.shake(this.fallingVelocity * 0.00001, this.fallingVelocity * 0.1, true, Phaser.Camera.SHAKE_VERTICAL);
     }
 
     // On-ground animations
