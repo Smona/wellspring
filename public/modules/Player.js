@@ -3,7 +3,7 @@ var msToGrabVine = 300;
 function Player(x, y) {
   this.baseSpeed = 350;
   this.jumpPower = 750;
-  this.scale = 0.08;
+  this.scale = 0.2;
   this.gravity = 1300;
   this.sprite = game.add.sprite(x, y, 'player');
   this.sprite.anchor.x = 0.5;
@@ -14,8 +14,8 @@ function Player(x, y) {
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
   this.sprite.body.gravity.y = this.gravity;
   // Adjust body size to width of legs
-  var shrinkBodyWidth = 100;
-  this.sprite.body.setSize(playerSpriteWidth - shrinkBodyWidth, playerSpriteHeight, shrinkBodyWidth / 2, -150);
+  var shrinkBodyWidth = 150;
+  this.sprite.body.setSize(playerSpriteWidth - shrinkBodyWidth, playerSpriteHeight, shrinkBodyWidth / 2, -50);
   // Prevent falling through ledges
   this.sprite.body.tilePadding.y = 20;
   this.falling = false;
@@ -41,8 +41,8 @@ function Player(x, y) {
   var playbackRate = 15;
   this.sprite.animations.add('rest', [0,1], 1, true);
   this.sprite.animations.add('run', [2,3,4,5,6,7], playbackRate, true);
-  this.sprite.animations.add('jump', [8,9,10,11], 20);
-  this.sprite.animations.add('climb', [12,13,14,15], 5, true);
+  this.sprite.animations.add('jump', [8,9], 20);
+  this.sprite.animations.add('climb', [10,11,12,13], 5, true);
 
   // Sounds
   this.sounds = {
@@ -150,6 +150,8 @@ Player.prototype.update = function () {
       this.sprite.animations.play('climb');
     } else if (cursors.down.isDown) {
       player.sprite.body.velocity.y += climbingSpeed;
+      this.sprite.animations.play('climb');
+    } else if (Math.abs(this.sprite.body.velocity.x) > 5) {
       this.sprite.animations.play('climb');
     } else {
       this.sprite.animations.stop()

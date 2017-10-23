@@ -25,9 +25,10 @@ var preload = {
     preloadBar.scale.setTo(0.5);
     game.load.setPreloadSprite(preloadBar);
 
-    playerSpriteWidth = 660;
-    playerSpriteHeight = 648;
-    game.load.spritesheet('player', 'sprites/Player.png', playerSpriteWidth, playerSpriteHeight);
+    playerSpriteWidth = 330;
+    playerSpriteHeight = 324;
+    var frames = 26;
+    game.load.spritesheet('player', 'sprites/Player.png', playerSpriteWidth, playerSpriteHeight, frames);
     game.load.tilemap('level1', 'tilemaps/level1-tripled.json',null,Phaser.Tilemap.TILED_JSON);
     game.load.image('ledgeTile','tilemaps/ledgeTile.png');
     game.load.image('wallTile','tilemaps/wallTile.png');
