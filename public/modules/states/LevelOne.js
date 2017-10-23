@@ -11,7 +11,6 @@ var camera = {
 
 levelOne = {
   preload: function () {
-    game.world.setBounds(0, 0, world.width, world.height);
     this.game.time.advancedTiming = true; // enables fps monitoring
   },
   create: function () {
