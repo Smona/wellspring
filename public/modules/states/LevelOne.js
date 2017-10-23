@@ -16,7 +16,7 @@ levelOne = {
   create: function () {
     player = new Player(game.world.centerX, game.world.height - 70);
     map = new Tilemap(player);
-    // wellShader(game.world);
+    wellShader(game.world);
     game.world.bringToTop(player.sprite);
   },
   update: function() {
@@ -50,24 +50,21 @@ function wellShader(layer) {
     'uniform vec2      resolution;',
     'uniform float     time;',
     'uniform vec2      mouse;',
-    'uniform float     viewAngle;', // angle of well viewed in radians
+    'uniform float     cameraWidth;', // angle of well viewed in radians
     'uniform float     leftEdge;',   // world coordinate of left edge of camera
     'uniform float     worldWidth;', // total width of level
-    'const float TWOPI = 2.0 * 3.14159265359;',
+    'const float PI = 3.14159265359;',
+    'const float TWOPI = 2.0 * PI;',
 
     'void main( void ) {',
-    'float xCoord = vTextureCoord.x + leftEdge - worldWidth / 2.0;',
-    // 'float renderedX = xCoord;',
+    'vec4 texColor = texture2D(uSampler, vTextureCoord);',
+    'float xCoord = cos((vTextureCoord.x - 0.5) * PI);',
     'float renderedX = worldWidth / TWOPI * sin(TWOPI*xCoord / worldWidth);',
-    // 'if (gl_FragCoord.x > resolution.x / 2.0) {',
-    //   'float stretchAmt = sin((resolution.x - gl_FragCoord.x) / (resolution.x / 2.0));',
-    // '}',
-    // 'gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.x, vTextureCoord.y)) * xCoord;',
-    'gl_FragColor = texture2D(uSampler, vec2(vTextureCoord.x, vTextureCoord.y)) * xCoord;',
+    'gl_FragColor = texColor - 0.3 * abs(1.0 - xCoord);',
     '}'
   ];
   var circularProjection = new Phaser.Filter(game, null, fragmentSrc);
-  circularProjection.uniforms.viewAngle = { type: '1f', value: 180 }; // FOV, in degrees
+  circularProjection.uniforms.cameraWidth = { type: '1f', value: camera.width }; // FOV, in degrees
   circularProjection.uniforms.leftEdge = { type: '1f', value: game.camera.x - world.width / 3 };
   circularProjection.uniforms.worldWidth = { type: '1f', value: world.width / 3 };
   circularProjection.setResolution(camera.width, camera.height);
