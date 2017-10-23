@@ -18,6 +18,7 @@ levelOne = {
     player = new Player(game.world.centerX, game.world.height - 70);
     map = new Tilemap(player);
     // wellShader(game.world);
+    game.world.bringToTop(player.sprite);
   },
   update: function() {
     game.camera.follow(player.sprite);

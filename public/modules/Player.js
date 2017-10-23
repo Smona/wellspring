@@ -62,7 +62,7 @@ Object.defineProperties(Player.prototype, {
   speed: {
     get: function () {
       var speedModifier = this.onGround ? 1 :
-        this.climbingVines ? 0.5 : 0.05;
+        this.climbingVines ? 0.15 : 0.05;
       // Move slower in the air
       return this.baseSpeed * speedModifier;
     }
