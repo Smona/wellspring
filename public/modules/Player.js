@@ -23,16 +23,19 @@ function Player(x, y) {
   this.climbingVines = false;
   this.lastTimeJumpPressed = game.time.now;
   cursors.up.onDown.add(function updateTime() {
-    if (this.onVines) {
-      this.climbingVines = true;
-    }
+    var leftVines = false;
     if (this.onGround) {
       this.jump();
     }
     if (this.climbingVines && game.time.now - this.lastTimeJumpPressed < msToGrabVine) {
       console.log('jumping');
       this.climbingVines = false;
-      this.jump();
+      this.setPhysics('air');
+      setTimeout(this.jump.bind(this), 10);
+      leftVines = true;
+    }
+    if (this.onVines && !leftVines) {
+      this.climbingVines = true;
     }
     this.lastTimeJumpPressed = game.time.now;
   }, this);
@@ -97,17 +100,16 @@ Player.prototype.update = function () {
     // Stop climbing vines
     if (this.climbingVines) {
       this.climbingVines = false;
-      this.sprite.position.y -= 32;
+      this.sprite.position.y -= 32;  // keeps you from falling off ledge you are on
     }
 
-    // Friction
-    this.sprite.body.drag.x = 2000;
+    this.setPhysics('ground');
 
     // Hitting the ground
     if (this.falling) {
       this.falling = false;
       this.playSound('fall', 0.2);
-      game.camera.shake(this.fallingVelocity * 0.00001, this.fallingVelocity * 0.1, true, Phaser.Camera.SHAKE_VERTICAL);
+      game.camera.shake(this.fallingVelocity * 0.000008, this.fallingVelocity * 0.2, true, Phaser.Camera.SHAKE_VERTICAL);
     }
 
     // On-ground animations
@@ -124,8 +126,7 @@ Player.prototype.update = function () {
       // this.sprite.y += 20;
     }
   } else { // player is in the air
-    // Lack of Friction
-    this.sprite.body.drag.x = 100;
+    this.setPhysics('air');
   }
 
   // Running Left
@@ -142,25 +143,20 @@ Player.prototype.update = function () {
     this.climbingVines = false;
   }
   if (this.climbingVines) {
-    this.sprite.body.drag.y = 10000;
-    this.sprite.body.drag.x = 2000;
-    var climbingSpeed = 200;
-    this.sprite.body.maxVelocity.y = climbingSpeed;
+    this.setPhysics('vines');
+    var climbAcceleration = 50;
     if (cursors.up.isDown) {
-      player.sprite.body.velocity.y -= climbingSpeed;
+      player.sprite.body.velocity.y -= climbAcceleration;
       this.sprite.animations.play('climb');
     } else if (cursors.down.isDown) {
-      player.sprite.body.velocity.y += climbingSpeed;
+      player.sprite.body.velocity.y += climbAcceleration;
       this.sprite.animations.play('climb');
     } else if (Math.abs(this.sprite.body.velocity.x) > 5) {
       this.sprite.animations.play('climb');
     } else {
       this.sprite.animations.stop()
     }
-  } else {
-    this.sprite.body.drag.y = 0;
   }
-
 };
 
 Player.prototype.playSound = function (key, time) {
@@ -170,4 +166,25 @@ Player.prototype.playSound = function (key, time) {
 Player.prototype.jump = function() {
   this.sprite.body.velocity.y = -this.jumpPower;
   this.sprite.animations.play('jump');
+};
+
+Player.prototype.setPhysics = function (state) {
+  switch (state) {
+    case 'ground':
+      // Friction
+      this.sprite.body.drag.y = 0;
+      this.sprite.body.drag.x = 2000;
+      break;
+    case 'vines':
+      this.sprite.body.drag.y = 1000;
+      this.sprite.body.drag.x = 2000;
+      var climbingSpeed = 200;
+      this.sprite.body.maxVelocity.y = climbingSpeed;
+      break;
+    case 'air':
+      // Lack of Friction
+      this.sprite.body.drag.x = 100;
+      this.sprite.body.drag.y = 0;
+      break;
+  }
 };
