@@ -10,7 +10,4 @@ game.state.add('level1', levelOne);
 
 window.onload = function () {
   game.state.start('boot');
-
-  // Remove loading text
-  document.body.classList.remove('loading');
 }

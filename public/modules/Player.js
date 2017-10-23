@@ -109,7 +109,7 @@ Player.prototype.update = function () {
     if (this.falling) {
       this.falling = false;
       this.playSound('fall', 0.2);
-      game.camera.shake(this.fallingVelocity * 0.000008, this.fallingVelocity * 0.2, true, Phaser.Camera.SHAKE_VERTICAL);
+      game.camera.shake(this.fallingVelocity * 0.0001, this.fallingVelocity * 0.3);
     }
 
     // On-ground animations
