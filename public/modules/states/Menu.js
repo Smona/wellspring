@@ -5,8 +5,8 @@ var frame = 0;
 
 menu = {
   create: function () {
-    game.world.setBounds(0, 0, world.width, world.height);
-    var background = new Tilemap();
+    game.world.setBounds(0, 0, 2048 * 3, 6656);
+    var background = new Tilemap('level1');
 
     var title = game.add.text(camera.width / 2, camera.height / 2, 'WELLSPRING', Object.assign(textStyle, {
       fontSize: '80px',
@@ -33,7 +33,7 @@ menu = {
     wellShader(game.world);
   },
   update: function () {
-    game.camera.y = world.height - camera.height - frame;
+    game.camera.y = 6656 - camera.height - frame;
     frame++;
   },
 };

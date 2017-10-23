@@ -28,7 +28,6 @@ function Player(x, y) {
       this.jump();
     }
     if (this.climbingVines && game.time.now - this.lastTimeJumpPressed < msToGrabVine) {
-      console.log('jumping');
       this.climbingVines = false;
       this.setPhysics('air');
       setTimeout(this.jump.bind(this), 10);
@@ -146,10 +145,10 @@ Player.prototype.update = function () {
     this.setPhysics('vines');
     var climbAcceleration = 50;
     if (cursors.up.isDown) {
-      player.sprite.body.velocity.y -= climbAcceleration;
+      this.sprite.body.velocity.y -= climbAcceleration;
       this.sprite.animations.play('climb');
     } else if (cursors.down.isDown) {
-      player.sprite.body.velocity.y += climbAcceleration;
+      this.sprite.body.velocity.y += climbAcceleration;
       this.sprite.animations.play('climb');
     } else if (Math.abs(this.sprite.body.velocity.x) > 5) {
       this.sprite.animations.play('climb');

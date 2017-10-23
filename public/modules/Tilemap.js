@@ -1,5 +1,5 @@
-function Tilemap(player) {
-  var map = game.add.tilemap('level1');
+function Tilemap(key, player) {
+  var map = game.add.tilemap(key);
 
   map.addTilesetImage('ledgeTile');
   map.addTilesetImage('wallTile');
