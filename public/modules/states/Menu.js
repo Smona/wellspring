@@ -29,6 +29,8 @@ menu = {
     key1.onDown.add(startGame, this);
     var key2 = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
     key2.onDown.add(startGame, this);
+
+    wellShader(game.world);
   },
   update: function () {
     game.camera.y = world.height - camera.height - frame;
