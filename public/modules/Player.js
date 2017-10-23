@@ -23,6 +23,9 @@ function Player(x, y) {
   this.climbingVines = false;
   this.lastTimeJumpPressed = game.time.now;
   cursors.up.onDown.add(function updateTime() {
+    if (this.onVines) {
+      this.climbingVines = true;
+    }
     if (this.onGround) {
       this.jump();
     }
@@ -101,6 +104,7 @@ Player.prototype.update = function () {
     if (this.falling) {
       this.falling = false;
       this.playSound('fall', 0.2);
+      game.camera.shake(this.sprite.body.velocity.y * .01)
     }
 
     // On-ground animations
@@ -131,11 +135,7 @@ Player.prototype.update = function () {
     this.sprite.body.velocity.x += this.speed;
     this.sprite.scale.setTo(this.scale, this.scale);
   }
-  if (this.onVines) {
-    if (cursors.up.isDown) {
-      this.climbingVines = true;
-    }
-  } else {
+  if (!this.onVines) {
     this.climbingVines = false;
   }
   if (this.climbingVines) {
