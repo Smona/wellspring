@@ -9,6 +9,7 @@ var game = new Phaser.Game(camera.width, camera.height, Phaser.AUTO, 'game-root'
 game.state.add('boot', boot);
 game.state.add('preload', preload);
 game.state.add('menu', menu);
+game.state.add('level0', new Level(2048 * 3, 1664, 'level0', 'level1').state)
 game.state.add('level1', new Level(2048 * 3, 6656, 'level1').state);
 
 

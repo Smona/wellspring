@@ -29,6 +29,7 @@ var preload = {
     playerSpriteHeight = 324;
     var frames = 26;
     game.load.spritesheet('player', 'sprites/Player.png', playerSpriteWidth, playerSpriteHeight, frames);
+    game.load.tilemap('level0', '/tilemaps/level0-tripled.json',null,Phaser.Tilemap.TILED_JSON);
     game.load.tilemap('level1', 'tilemaps/level1-tripled.json',null,Phaser.Tilemap.TILED_JSON);
     game.load.image('ledgeTile','tilemaps/ledgeTile.png');
     game.load.image('wallTile','tilemaps/wallTile.png');

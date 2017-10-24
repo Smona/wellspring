@@ -16,7 +16,7 @@ menu = {
     title.fixedToCamera = true;
 
     function startGame() {
-      game.state.start('level1');
+      game.state.start('level0');
     }
 
     var startButton = game.add.button(camera.width / 2, camera.height * 0.8,

@@ -9,8 +9,8 @@ function Tilemap(key, player) {
   this.ledges = map.createLayer('ledge');
   this.vines = map.createLayer('vine');
   if (typeof player !== 'undefined') {
-    map.setCollisionBetween(269, 277, true, this.ledges);
-    map.setCollisionBetween(1, 7, true, this.vines);
+    map.setCollisionByExclusion([0], true, this.ledges);
+    map.setCollisionByExclusion([0], true, this.vines);
     var vineFallTimer;
     map.setTileIndexCallback([1, 2, 3, 4, 5, 6, 7], function () {
       if (!!vineFallTimer) {
