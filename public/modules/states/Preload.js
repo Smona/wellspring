@@ -29,12 +29,16 @@ var preload = {
     playerSpriteHeight = 324;
     var frames = 26;
     game.load.spritesheet('player', 'sprites/Player.png', playerSpriteWidth, playerSpriteHeight, frames);
+    game.load.spritesheet('startButton', 'sprites/start_button.png', 175, 74);
+
     game.load.tilemap('level0', '/tilemaps/level0-tripled.json',null,Phaser.Tilemap.TILED_JSON);
     game.load.tilemap('level1', 'tilemaps/level1-tripled.json',null,Phaser.Tilemap.TILED_JSON);
+
     game.load.image('ledgeTile','tilemaps/ledgeTile.png');
     game.load.image('wallTile','tilemaps/wallTile.png');
     game.load.image('vineTile', 'tilemaps/vineTile.png');
-    game.load.spritesheet('startButton', 'sprites/start_button.png', 175, 74);
+    game.load.image('arrow_keys', 'sprites/keys.png');
+
     //  Load the Google WebFont Loader script
     game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
