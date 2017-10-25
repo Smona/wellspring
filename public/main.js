@@ -36,9 +36,9 @@ function wellShader(layer) {
 
     'void main( void ) {',
     'vec4 texColor = texture2D(uSampler, vTextureCoord);',
-    'float xCoord = cos((vTextureCoord.x - 0.5) * PI);',
+    'float xCoord = cos((vTextureCoord.x - 0.5) * PI / 3.0);',
     // 'float renderedX = worldWidth / TWOPI * sin(TWOPI*xCoord / worldWidth);',
-    'gl_FragColor = texColor - 0.3 * abs(1.0 - xCoord);',
+    'gl_FragColor = texColor - 2.0 *  abs(1.0 - xCoord);',
     '}'
   ];
   var circularProjection = new Phaser.Filter(game, null, fragmentSrc);
