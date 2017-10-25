@@ -45,6 +45,7 @@ var preload = {
     game.load.audio('grassFall', 'audio/grass_fall.mp3');
     game.load.audio('grassStep', 'audio/grass_step.mp3');
     game.load.audio('cave_noise', 'audio/cave_noise.mp3');
+    game.load.audio('vine_rustles', 'audio/vine_rustles.mp3');
   },
   create: function () {
     game.state.start(startState);

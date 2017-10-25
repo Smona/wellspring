@@ -50,6 +50,7 @@ function Player(x, y) {
   this.sounds = {
     fall: game.add.audio('grassFall'),
     step: game.add.audio('grassStep', 0.1),
+    climbVines: game.add.audio('vine_rustles'),
   };
 }
 
@@ -64,7 +65,7 @@ Object.defineProperties(Player.prototype, {
   speed: {
     get: function () {
       var speedModifier = this.onGround ? 1 :
-        this.climbingVines ? 0.15 : 0.05;
+        this.climbingVines ? 0.12 : 0.05;
       // Move slower in the air
       return this.baseSpeed * speedModifier;
     }
@@ -76,17 +77,21 @@ Object.defineProperties(Player.prototype, {
   }
 });
 
-var stepSoundWaiting = false;
-var stepDelay = 200;
-function stepSoundLoop() {
-  if (!stepSoundWaiting) {
-    this.playSound('step');
-    stepSoundWaiting = true;
-    setTimeout(function () {
-      stepSoundWaiting = false;
-    }, stepDelay)
+function loopSound(key, delay, volume) {
+  var soundWaiting = false;
+  return function() {
+    if (!soundWaiting) {
+      this.playSound(key, null, volume);
+      soundWaiting = true;
+      setTimeout(function () {
+        soundWaiting = false;
+      }, delay)
+    }
   }
 }
+var stepSoundLoop = loopSound('step', 200);
+var vineSoundLoop = loopSound('climbVines', 600, 0.5);
+
 Player.prototype.update = function () {
   this.sprite.body.maxVelocity.setTo(this.baseSpeed, 800);
   if (this.sprite.body.velocity.y > 500) {
@@ -147,19 +152,22 @@ Player.prototype.update = function () {
     if (cursors.up.isDown) {
       this.sprite.body.velocity.y -= climbAcceleration;
       this.sprite.animations.play('climb');
+      vineSoundLoop.call(this);
     } else if (cursors.down.isDown) {
       this.sprite.body.velocity.y += climbAcceleration;
       this.sprite.animations.play('climb');
+      vineSoundLoop.call(this);
     } else if (Math.abs(this.sprite.body.velocity.x) > 5) {
       this.sprite.animations.play('climb');
+      vineSoundLoop.call(this);
     } else {
       this.sprite.animations.stop()
     }
   }
 };
 
-Player.prototype.playSound = function (key, time) {
-  this.sounds[key].play(null, time);
+Player.prototype.playSound = function (key, time, volume) {
+  this.sounds[key].play(null, time, volume);
 };
 
 Player.prototype.jump = function() {
