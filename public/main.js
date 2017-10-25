@@ -25,6 +25,9 @@ game.state.add('level0', new Level(2048 * 3, 1664, 'level0', 'level1', {
 
     this.tut1.add(text);
     this.tut1.add(keys);
+
+    var caveNoise = game.add.audio('cave_noise');
+    caveNoise.play(null, 0, 0.1, true);
   },
   update: function () {
     if (this.tut1 && (cursors.up.isDown || cursors.left.isDown || cursors.right.isDown)) {

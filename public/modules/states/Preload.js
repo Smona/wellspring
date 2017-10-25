@@ -43,7 +43,8 @@ var preload = {
     game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
     game.load.audio('grassFall', 'audio/grass_fall.mp3');
-    game.load.audio('grassStep', 'audio/grass_step.mp3')
+    game.load.audio('grassStep', 'audio/grass_step.mp3');
+    game.load.audio('cave_noise', 'audio/cave_noise.mp3');
   },
   create: function () {
     game.state.start(startState);
