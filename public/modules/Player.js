@@ -2,7 +2,7 @@ var msToGrabVine = 300;
 
 function Player(x, y) {
   this.baseSpeed = 350;
-  this.jumpPower = 750;
+  this.jumpPower = 725;
   this.scale = 0.2;
   this.gravity = 1300;
   this.sprite = game.add.sprite(x, y, 'player');
