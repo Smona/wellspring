@@ -3,3 +3,4 @@ build
 
 # Jetbrains config files
 .idea/
+.DS_Store
