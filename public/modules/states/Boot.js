@@ -13,6 +13,11 @@ boot = {
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
     cursors = game.input.keyboard.createCursorKeys();
+    cursors.w = game.input.keyboard.addKey(Phaser.Keyboard.W);
+    cursors.a = game.input.keyboard.addKey(Phaser.Keyboard.A);
+    cursors.s = game.input.keyboard.addKey(Phaser.Keyboard.S);
+    cursors.d = game.input.keyboard.addKey(Phaser.Keyboard.D);
+    cursors.jump = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
     game.state.start('preload');
   }

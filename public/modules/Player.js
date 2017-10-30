@@ -3,7 +3,7 @@ var msToGrabVine = 300;
 function Player(x, y) {
   this.baseSpeed = 350;
   this.jumpPower = 725;
-  this.scale = 0.2;
+  this.scale = 0.15;
   this.gravity = 1300;
   this.sprite = game.add.sprite(x, y, 'player');
   this.sprite.anchor.x = 0.5;
@@ -22,7 +22,7 @@ function Player(x, y) {
   this.onVines = false;
   this.climbingVines = false;
   this.lastTimeJumpPressed = game.time.now;
-  cursors.up.onDown.add(function updateTime() {
+  function updateTime() {
     var leftVines = false;
     if (this.onGround) {
       this.jump();
@@ -37,7 +37,9 @@ function Player(x, y) {
       this.climbingVines = true;
     }
     this.lastTimeJumpPressed = game.time.now;
-  }, this);
+  }
+  cursors.up.onDown.add(updateTime, this);
+  cursors.jump.onDown.add(updateTime, this);
 
   // Animations
   var playbackRate = 15;
@@ -134,12 +136,12 @@ Player.prototype.update = function () {
   }
 
   // Running Left
-  if (cursors.left.isDown) {
+  if (cursors.left.isDown || cursors.a.isDown) {
     this.sprite.body.velocity.x -= this.speed;
     this.sprite.scale.setTo(-this.scale, this.scale);
   }
   // Running Right
-  if (cursors.right.isDown) {
+  if (cursors.right.isDown || cursors.d.isDown) {
     this.sprite.body.velocity.x += this.speed;
     this.sprite.scale.setTo(this.scale, this.scale);
   }

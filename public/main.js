@@ -30,7 +30,8 @@ game.state.add('level0', new Level(2048 * 3, 1664, 'level0', 'level1', {
     caveNoise.play(null, 0, 0.1, true);
   },
   update: function () {
-    if (this.tut1 && (cursors.up.isDown || cursors.left.isDown || cursors.right.isDown)) {
+    if (this.tut1 && (cursors.up.isDown || cursors.left.isDown || cursors.right.isDown ||
+        cursors.jump.isDown || cursors.a.isDown || cursors.d.isDown)) {
       this.tut1.removeChildren();
       this.tut1 = false;
     }
