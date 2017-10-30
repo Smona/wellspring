@@ -46,9 +46,13 @@ Object.defineProperties(Level.prototype, {
           }
 
           // Level Completion
-          if (currentLevel < levels.length - 1 && this.player.sprite.y < 180) {
-            currentLevel++;
-            game.state.start(levels[currentLevel].name);
+          if (this.player.sprite.y < 180) {
+            if (currentLevel < levels.length - 1 ) {
+              currentLevel++;
+              game.state.start(levels[currentLevel].name);
+            } else if (currentLevel = levels.length - 1) {
+              game.state.start('victory');
+            }
           }
 
           this.map.checkCollisions(this.player.sprite);

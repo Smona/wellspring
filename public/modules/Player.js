@@ -46,8 +46,8 @@ function Player(x, y) {
   var playbackRate = 15;
   this.sprite.animations.add('rest', [0,1], 1, true);
   this.sprite.animations.add('run', [2,3,4,5,6,7], playbackRate, true);
-  this.sprite.animations.add('jump', [8,9], 20);
-  this.sprite.animations.add('climb', [10,11,12,13], 5, true);
+  this.sprite.animations.add('jump', [8,9, 10], 20);
+  this.sprite.animations.add('climb', [12,13,14,15], 5, true);
 
   // Sounds
   this.sounds = {

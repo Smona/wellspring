@@ -12,6 +12,7 @@ game.state.add('menu', menu);
 levels.forEach(function (level) {
   game.state.add(level.name, level.state)
 });
+game.state.add('victory', victory);
 
 
 window.onload = function () {

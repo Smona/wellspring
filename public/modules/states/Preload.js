@@ -39,6 +39,7 @@ var preload = {
     game.load.image('vineTile', 'tilemaps/vineTile.png');
     game.load.image('arrow_keys', 'sprites/keys.png');
     game.load.image('sign', 'sprites/sign.png');
+    game.load.image('victory_bg', 'sprites/landscape.png');
 
     //  Load the Google WebFont Loader script
     game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
