@@ -4,7 +4,7 @@ var concat = require('gulp-concat');
 var modulesPath = './public/modules/*/*.js';
 
 gulp.task('scripts', function() {
-  return gulp.src(modulesPath)
+  return gulp.src(['./public/modules/*.js', './public/modules/states/*.js', './public/modules/levels/*.js'])
     .pipe(concat('modules.js'))
     .pipe(gulp.dest('./public/'));
 });

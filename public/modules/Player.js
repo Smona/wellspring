@@ -4,7 +4,7 @@ function Player(x, y) {
   this.baseSpeed = 350;
   // this.jumpPower = 725;
   this.jumpPower = 800;
-  this.scale = 0.15;
+  this.scale = 0.2;
   this.gravity = 1300;
   this.sprite = game.add.sprite(x, y, 'player');
   this.sprite.anchor.x = 0.5;
