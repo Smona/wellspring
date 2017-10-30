@@ -15,7 +15,7 @@ function Player(x, y) {
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
   this.sprite.body.gravity.y = this.gravity;
   // Adjust body size to width of legs
-  var shrinkBodyWidth = 400;
+  var shrinkBodyWidth = playerSpriteWidth * 0.7;
   this.sprite.body.setSize(playerSpriteWidth - shrinkBodyWidth, playerSpriteHeight, shrinkBodyWidth / 2, -50);
   // Prevent falling through ledges
   this.sprite.body.tilePadding.y = 20;
