@@ -1,0 +1,1 @@
+levels[1] = new Level(2048 * 3, 6656, 'level1');
