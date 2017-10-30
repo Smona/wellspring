@@ -107,7 +107,7 @@ Player.prototype.update = function () {
     // Stop climbing vines
     if (this.climbingVines) {
       this.climbingVines = false;
-      this.sprite.position.y -= 32;  // keeps you from falling off ledge you are on
+      this.sprite.position.y -= 2;  // keeps you from falling off ledge you are on
     }
 
     this.setPhysics('ground');
