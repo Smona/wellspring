@@ -23,24 +23,25 @@ function Player(x, y) {
   this.onVines = false;
   this.climbingVines = false;
   this.lastTimeJumpPressed = game.time.now;
-  function updateTime() {
+  function jumpBehavior() {
     var leftVines = false;
     if (this.onGround) {
       this.jump();
     }
-    if (this.climbingVines && game.time.now - this.lastTimeJumpPressed < msToGrabVine) {
+    if (this.climbingVines) {
       this.climbingVines = false;
       this.setPhysics('air');
       setTimeout(this.jump.bind(this), 10);
-      leftVines = true;
     }
-    if (this.onVines && !leftVines) {
+  }
+  function grabVines() {
+    if (this.onVines) {
       this.climbingVines = true;
     }
-    this.lastTimeJumpPressed = game.time.now;
   }
-  cursors.up.onDown.add(updateTime, this);
-  cursors.jump.onDown.add(updateTime, this);
+  cursors.jump.onDown.add(jumpBehavior, this);
+  cursors.up.onDown.add(grabVines, this);
+  cursors.w.onDown.add(grabVines, this);
 
   // Animations
   var playbackRate = 15;
@@ -105,7 +106,7 @@ Player.prototype.update = function () {
   // Player is standing on ground
   if (this.onGround) {
     // Stop climbing vines
-    if (this.climbingVines) {
+    if (this.climbingVines && !cursors.w.isDown && !cursors.up.isDown) {
       this.climbingVines = false;
       this.sprite.position.y -= 2;  // keeps you from falling off ledge you are on
     }
@@ -152,7 +153,7 @@ Player.prototype.update = function () {
   if (this.climbingVines) {
     this.setPhysics('vines');
     var climbAcceleration = 50;
-    if (cursors.up.isDown) {
+    if (cursors.up.isDown || cursors.w.isDown) {
       this.sprite.body.velocity.y -= climbAcceleration;
       this.sprite.animations.play('climb');
       vineSoundLoop.call(this);
