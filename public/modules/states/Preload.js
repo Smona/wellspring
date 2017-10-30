@@ -25,8 +25,8 @@ var preload = {
     preloadBar.scale.setTo(0.5);
     game.load.setPreloadSprite(preloadBar);
 
-    playerSpriteWidth = 329;
-    playerSpriteHeight = 324;
+    playerSpriteWidth = 658;
+    playerSpriteHeight = 648;
     var frames = 32;
     game.load.spritesheet('player', 'sprites/Player.png', playerSpriteWidth, playerSpriteHeight, frames);
     game.load.spritesheet('startButton', 'sprites/start_button.png', 175, 74);
