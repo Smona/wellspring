@@ -5,7 +5,7 @@ function Player(x, y) {
   // this.jumpPower = 725;
   this.jumpPower = 800;
   this.scale = 0.2;
-  this.gravity = 1300;
+  this.gravity = 1900;
   this.sprite = game.add.sprite(x, y, 'player');
   this.sprite.anchor.x = 0.5;
   this.sprite.anchor.y = 1;
@@ -147,12 +147,20 @@ Player.prototype.update = function () {
     this.sprite.body.velocity.x += this.speed;
     this.sprite.scale.setTo(this.scale, this.scale);
   }
+
+  // Variable height jump
+  if (cursors.jump.isDown && this.sprite.body.velocity.y <= 0) {
+    this.sprite.body.gravity.y = this.gravity * 0.6;
+  } else {
+    this.sprite.body.gravity.y = this.gravity;
+  }
+
   if (!this.onVines) {
     this.climbingVines = false;
   }
   if (this.climbingVines) {
     this.setPhysics('vines');
-    var climbAcceleration = 50;
+    var climbAcceleration = 80;
     if (cursors.up.isDown || cursors.w.isDown) {
       this.sprite.body.velocity.y -= climbAcceleration;
       this.sprite.animations.play('climb');
