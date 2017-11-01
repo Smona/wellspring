@@ -12,7 +12,15 @@ function Tilemap(key, player) {
     map.setCollisionByExclusion([0], true, this.ledges);
     map.setCollisionByExclusion([0], true, this.vines);
     var vineFallTimer;
-    map.setTileIndexCallback([1, 2, 3, 4, 5, 6, 7], function () {
+
+    // Generate array of non-0 indexes
+    var vineTileIndexes = new Array(100);
+    for (var i = 0; i < vineTileIndexes.length; i++) {
+      vineTileIndexes[i] = i + 1;
+    }
+
+    // Remove vine/player separation and add grabbing mechanic
+    map.setTileIndexCallback(vineTileIndexes, function () {
       if (!!vineFallTimer) {
         clearTimeout(vineFallTimer);
       }
