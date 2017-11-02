@@ -1,7 +1,10 @@
 function Tilemap(key, player) {
   var map = game.add.tilemap(key);
 
-  map.addTilesetImage('ledgeTile');
+  map.addTilesetImage('grassLedgeTile');
+  map.addTilesetImage('stoneLedgeTile');
+  map.addTilesetImage('wellBottom');
+  map.addTilesetImage('ladder');
   map.addTilesetImage('wallTile');
   map.addTilesetImage('vineTile');
 

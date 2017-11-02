@@ -1,4 +1,4 @@
-levels[0] = new Level(2048 * 3, 1664, 'level0', {
+levels[0] = new Level(2048 * 3, 2400, 'level0', {
   create: function () {
     this.tut1 = game.add.group();
     var keys = game.add.sprite(camera.width / 2, camera.height / 2, 'arrow_keys');
