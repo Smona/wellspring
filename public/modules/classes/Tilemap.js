@@ -1,20 +1,38 @@
 function Tilemap(key, player) {
   var map = game.add.tilemap(key);
   var that = this;
+  // Generate array of non-0 indexes
+  var indexes = new Array(1000);
+  for (var i = 0; i < indexes.length; i++) {
+    indexes[i] = i + 1;
+  }
 
   function setupLayer(layerName, cb) {
     var hasLayer = map.layers.filter(function (layer) {
       return layer.name === layerName;
     }).length > 0;
     if (hasLayer) {
-      console.log('has ' + layerName)
-      // Generate array of non-0 indexes
-      var indexes = new Array(400);
-      for (var i = 0; i < indexes.length; i++) {
-        indexes[i] = i + 1;
-      }
+      cb.call(that);
+      that[layerName] = map.createLayer(layerName);
+      climbBehavior(layerName);
+    }
+  }
+  function climbBehavior(layerName) {
+    if (typeof player !== 'undefined') {
+      map.setCollisionByExclusion([0], true, that[layerName]);
+      var fallTimer;
+      var propName = 'on' + layerName.charAt(0).toUpperCase() + layerName.slice(1);
 
-      cb.call(that, indexes);
+      // Remove vine/player separation and add grabbing mechanic
+      map.setTileIndexCallback(indexes, function () {
+        if (!!fallTimer) {
+          clearTimeout(fallTimer);
+        }
+        player[propName] = true;
+        fallTimer = setTimeout(function () {
+          player.onVine = false;
+        }, 32);
+      }, game, that[layerName]);
     }
   }
 
@@ -25,36 +43,12 @@ function Tilemap(key, player) {
   this.wellTiles = map.createLayer('wall');
   this.ledges = map.createLayer('grassLedge');
 
-  setupLayer('vines', function(indexes) {
+  setupLayer('vine', function() {
     map.addTilesetImage('vineTile');
-    this.vines = map.createLayer('vine');
-    if (typeof player !== 'undefined') {
-      map.setCollisionByExclusion([0], true, this.vines);
-      var vineFallTimer;
-
-      // Remove vine/player separation and add grabbing mechanic
-      map.setTileIndexCallback(indexes, function () {
-        if (!!vineFallTimer) {
-          clearTimeout(vineFallTimer);
-        }
-        player.onVines = true;
-        vineFallTimer = setTimeout(function () {
-          player.onVines = false;
-        }, 32);
-      }, game, this.vines);
-    }
   });
 
-  setupLayer('ladder', function(indexes) {
+  setupLayer('ladder', function() {
     map.addTilesetImage('ladder');
-    console.log(this)
-    this.ladders = map.createLayer('ladder');
-    if (typeof player !== 'undefined') {
-      map.setCollisionByExclusion([0], true, this.ladders);
-      map.setTileIndexCallback(indexes, function () {
-        console.log('laddering');
-      }, game, this.ladders);
-    }
   });
 
   this.stoneLedges = map.createLayer('stoneLedge');
@@ -76,11 +70,11 @@ Tilemap.prototype.checkCollisions = function (body) {
       ledge.worldY - ledge.height + 40;
     return colliding;
   });
-  if (this.vines) {
-    game.physics.arcade.collide(body, this.vines);
+  if (this.vine) {
+    game.physics.arcade.collide(body, this.vine);
   }
-  if (this.ladders) {
-    game.physics.arcade.collide(body, this.ladders);
+  if (this.ladder) {
+    game.physics.arcade.collide(body, this.ladder);
   }
   game.physics.arcade.collide(body, this.wellBottom);
 };

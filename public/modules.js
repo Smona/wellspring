@@ -31,11 +31,11 @@ function Player(x, y) {
   // Prevent falling through ledges
   this.sprite.body.tilePadding.y = 20;
   this.falling = false;
-  this.onVines = false;
+  this.onVine = false;
+  this.onLadder = false;
   this.climbingVines = false;
   this.lastTimeJumpPressed = game.time.now;
   function jumpBehavior() {
-    var leftVines = false;
     if (this.onGround) {
       this.jump();
     }
@@ -46,7 +46,7 @@ function Player(x, y) {
     }
   }
   function grabVines() {
-    if (this.onVines) {
+    if (this.onVine) {
       this.climbingVines = true;
     }
   }
@@ -166,7 +166,7 @@ Player.prototype.update = function () {
     this.sprite.body.gravity.y = this.gravity;
   }
 
-  if (!this.onVines) {
+  if (!this.onVine) {
     this.climbingVines = false;
   }
   if (this.climbingVines) {
@@ -222,20 +222,38 @@ Player.prototype.setPhysics = function (state) {
 function Tilemap(key, player) {
   var map = game.add.tilemap(key);
   var that = this;
+  // Generate array of non-0 indexes
+  var indexes = new Array(1000);
+  for (var i = 0; i < indexes.length; i++) {
+    indexes[i] = i + 1;
+  }
 
   function setupLayer(layerName, cb) {
     var hasLayer = map.layers.filter(function (layer) {
       return layer.name === layerName;
     }).length > 0;
     if (hasLayer) {
-      console.log('has ' + layerName)
-      // Generate array of non-0 indexes
-      var indexes = new Array(400);
-      for (var i = 0; i < indexes.length; i++) {
-        indexes[i] = i + 1;
-      }
+      cb.call(that);
+      that[layerName] = map.createLayer(layerName);
+      climbBehavior(layerName);
+    }
+  }
+  function climbBehavior(layerName) {
+    if (typeof player !== 'undefined') {
+      map.setCollisionByExclusion([0], true, that[layerName]);
+      var fallTimer;
+      var propName = 'on' + layerName.charAt(0).toUpperCase() + layerName.slice(1);
 
-      cb.call(that, indexes);
+      // Remove vine/player separation and add grabbing mechanic
+      map.setTileIndexCallback(indexes, function () {
+        if (!!fallTimer) {
+          clearTimeout(fallTimer);
+        }
+        player[propName] = true;
+        fallTimer = setTimeout(function () {
+          player.onVine = false;
+        }, 32);
+      }, game, that[layerName]);
     }
   }
 
@@ -246,36 +264,12 @@ function Tilemap(key, player) {
   this.wellTiles = map.createLayer('wall');
   this.ledges = map.createLayer('grassLedge');
 
-  setupLayer('vines', function(indexes) {
+  setupLayer('vine', function() {
     map.addTilesetImage('vineTile');
-    this.vines = map.createLayer('vine');
-    if (typeof player !== 'undefined') {
-      map.setCollisionByExclusion([0], true, this.vines);
-      var vineFallTimer;
-
-      // Remove vine/player separation and add grabbing mechanic
-      map.setTileIndexCallback(indexes, function () {
-        if (!!vineFallTimer) {
-          clearTimeout(vineFallTimer);
-        }
-        player.onVines = true;
-        vineFallTimer = setTimeout(function () {
-          player.onVines = false;
-        }, 32);
-      }, game, this.vines);
-    }
   });
 
-  setupLayer('ladder', function(indexes) {
+  setupLayer('ladder', function() {
     map.addTilesetImage('ladder');
-    console.log(this)
-    this.ladders = map.createLayer('ladder');
-    if (typeof player !== 'undefined') {
-      map.setCollisionByExclusion([0], true, this.ladders);
-      map.setTileIndexCallback(indexes, function () {
-        console.log('laddering');
-      }, game, this.ladders);
-    }
   });
 
   this.stoneLedges = map.createLayer('stoneLedge');
@@ -297,11 +291,11 @@ Tilemap.prototype.checkCollisions = function (body) {
       ledge.worldY - ledge.height + 40;
     return colliding;
   });
-  if (this.vines) {
-    game.physics.arcade.collide(body, this.vines);
+  if (this.vine) {
+    game.physics.arcade.collide(body, this.vine);
   }
-  if (this.ladders) {
-    game.physics.arcade.collide(body, this.ladders);
+  if (this.ladder) {
+    game.physics.arcade.collide(body, this.ladder);
   }
   game.physics.arcade.collide(body, this.wellBottom);
 };
@@ -330,7 +324,7 @@ boot = {
   }
 };
 var levels = [ ];
-var currentLevel = 0;
+var currentLevel = 1;
 
 function Level(name, customCallbacks) {
   this.name = name;
@@ -407,8 +401,8 @@ var frame = 0;
 
 menu = {
   create: function () {
-    game.world.setBounds(0, 0, 2048 * 3, 6656);
     var background = new Tilemap('level1');
+    game.world.setBounds(0, 0, background.map.widthInPixels, background.map.heightInPixels);
 
     var title = game.add.text(camera.width / 2, camera.height / 2, 'WELLSPRING', Object.assign(textStyle, {
       fontSize: '80px',

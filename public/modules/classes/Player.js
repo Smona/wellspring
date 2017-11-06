@@ -20,11 +20,11 @@ function Player(x, y) {
   // Prevent falling through ledges
   this.sprite.body.tilePadding.y = 20;
   this.falling = false;
-  this.onVines = false;
+  this.onVine = false;
+  this.onLadder = false;
   this.climbingVines = false;
   this.lastTimeJumpPressed = game.time.now;
   function jumpBehavior() {
-    var leftVines = false;
     if (this.onGround) {
       this.jump();
     }
@@ -35,7 +35,7 @@ function Player(x, y) {
     }
   }
   function grabVines() {
-    if (this.onVines) {
+    if (this.onVine) {
       this.climbingVines = true;
     }
   }
@@ -155,7 +155,7 @@ Player.prototype.update = function () {
     this.sprite.body.gravity.y = this.gravity;
   }
 
-  if (!this.onVines) {
+  if (!this.onVine) {
     this.climbingVines = false;
   }
   if (this.climbingVines) {

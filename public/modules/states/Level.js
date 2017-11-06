@@ -1,5 +1,5 @@
 var levels = [ ];
-var currentLevel = 0;
+var currentLevel = 1;
 
 function Level(name, customCallbacks) {
   this.name = name;
