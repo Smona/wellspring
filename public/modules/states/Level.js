@@ -20,7 +20,7 @@ Object.defineProperties(Level.prototype, {
         }.bind(this),
         create: function () {
           game.world.setBounds(0, 0, this.width, this.height);
-          this.player = new Player(game.world.centerX, game.world.height - 70);
+          this.player = new Player(game.world.centerX, game.world.height - 160);
           this.map = new Tilemap(this.name, this.player);
           wellShader(game.world);
 

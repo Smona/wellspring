@@ -11,10 +11,12 @@ function Tilemap(key, player) {
   this.wellTiles = map.createLayer('wall');
   this.ledges = map.createLayer('grassLedge');
   this.stoneLedges = map.createLayer('stoneLedge');
+  this.wellBottom = map.createLayer('stone');
   this.vines = map.createLayer('vine');
   if (typeof player !== 'undefined') {
     map.setCollisionByExclusion([0], true, this.ledges);
     map.setCollisionByExclusion([0], true, this.stoneLedges);
+    map.setCollisionByExclusion([0], true, this.wellBottom);
     map.setCollisionByExclusion([0], true, this.vines);
     var vineFallTimer;
 
@@ -48,4 +50,5 @@ Tilemap.prototype.checkCollisions = function (body) {
     return colliding;
   });
   game.physics.arcade.collide(body, this.vines);
+  game.physics.arcade.collide(body, this.wellBottom);
 };
