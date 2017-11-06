@@ -9,10 +9,12 @@ function Tilemap(key, player) {
   map.addTilesetImage('vineTile');
 
   this.wellTiles = map.createLayer('wall');
-  this.ledges = map.createLayer('ledge');
+  this.ledges = map.createLayer('grassLedge');
+  this.stoneLedges = map.createLayer('stoneLedge');
   this.vines = map.createLayer('vine');
   if (typeof player !== 'undefined') {
     map.setCollisionByExclusion([0], true, this.ledges);
+    map.setCollisionByExclusion([0], true, this.stoneLedges);
     map.setCollisionByExclusion([0], true, this.vines);
     var vineFallTimer;
 

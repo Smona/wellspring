@@ -222,15 +222,20 @@ Player.prototype.setPhysics = function (state) {
 function Tilemap(key, player) {
   var map = game.add.tilemap(key);
 
-  map.addTilesetImage('ledgeTile');
+  map.addTilesetImage('grassLedgeTile');
+  map.addTilesetImage('stoneLedgeTile');
+  map.addTilesetImage('wellBottom');
+  map.addTilesetImage('ladder');
   map.addTilesetImage('wallTile');
   map.addTilesetImage('vineTile');
 
   this.wellTiles = map.createLayer('wall');
-  this.ledges = map.createLayer('ledge');
+  this.ledges = map.createLayer('grassLedge');
+  this.stoneLedges = map.createLayer('stoneLedge');
   this.vines = map.createLayer('vine');
   if (typeof player !== 'undefined') {
     map.setCollisionByExclusion([0], true, this.ledges);
+    map.setCollisionByExclusion([0], true, this.stoneLedges);
     map.setCollisionByExclusion([0], true, this.vines);
     var vineFallTimer;
 
@@ -434,7 +439,10 @@ var preload = {
     game.load.tilemap('level0', 'tilemaps/level0-tripled.json',null,Phaser.Tilemap.TILED_JSON);
     game.load.tilemap('level1', 'tilemaps/level1-tripled.json',null,Phaser.Tilemap.TILED_JSON);
 
-    game.load.image('ledgeTile','tilemaps/ledgeTile.png');
+    game.load.image('grassLedgeTile','tilemaps/ledgeTile.png');
+    game.load.image('stoneLedgeTile','tilemaps/stoneledgetiled.png');
+    game.load.image('wellBottom','tilemaps/stoneledge.png');
+    game.load.image('ladder','tilemaps/ladder.png');
     game.load.image('wallTile','tilemaps/wallTile.png');
     game.load.image('vineTile', 'tilemaps/vineTile.png');
     game.load.image('arrow_keys', 'sprites/keys.png');
@@ -462,7 +470,7 @@ var victory = {
     player.sprite.scale.setTo(0.1);
   }
 };
-levels[0] = new Level(2048 * 3, 1664, 'level0', {
+levels[0] = new Level(2048 * 3, 2400, 'level0', {
   create: function () {
     this.tut1 = game.add.group();
     var keys = game.add.sprite(camera.width / 2, camera.height / 2, 'arrow_keys');
@@ -505,4 +513,4 @@ levels[0] = new Level(2048 * 3, 1664, 'level0', {
     }
   }
 });
-levels[1] = new Level(2048 * 3, 6656, 'level1');
+levels[1] = new Level(2048 * 3, 2400, 'level1');
