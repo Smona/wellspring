@@ -34,7 +34,7 @@ function Player(x, y) {
   this.onVine = false;
   this.onLadder = false;
   this.climbingVines = false;
-  this.lastTimeJumpPressed = game.time.now;
+  this.climbingLadder = false;
   function jumpBehavior() {
     if (this.onGround) {
       this.jump();
@@ -50,9 +50,18 @@ function Player(x, y) {
       this.climbingVines = true;
     }
   }
+  function grabLadder() {
+    if (this.onLadder) {
+      this.climbingLadder = true;
+    }
+  }
   cursors.jump.onDown.add(jumpBehavior, this);
   cursors.up.onDown.add(grabVines, this);
   cursors.w.onDown.add(grabVines, this);
+  cursors.up.onDown.add(grabLadder, this);
+  cursors.w.onDown.add(grabLadder, this);
+  cursors.down.onDown.add(grabLadder, this);
+  cursors.s.onDown.add(grabLadder, this);
 
   // Animations
   var playbackRate = 15;
@@ -60,6 +69,7 @@ function Player(x, y) {
   this.sprite.animations.add('run', [2,3,4,5,6,7], playbackRate, true);
   this.sprite.animations.add('jump', [8,9, 10], 20);
   this.sprite.animations.add('climb', [12,13,14,15], 5, true);
+  this.sprite.animations.add('climbDown', [15,14,13,12], 5, true);
 
   // Sounds
   this.sounds = {
@@ -120,6 +130,10 @@ Player.prototype.update = function () {
     if (this.climbingVines && !cursors.w.isDown && !cursors.up.isDown) {
       this.climbingVines = false;
       this.sprite.position.y -= 2;  // keeps you from falling off ledge you are on
+    }
+    if (this.climbingLadder && !cursors.up.isDown && !cursors.w.isDown) {
+      this.climbingLadder = false;
+      this.sprite.position.y -= 2;
     }
 
     this.setPhysics('ground');
@@ -187,6 +201,23 @@ Player.prototype.update = function () {
       this.sprite.animations.stop()
     }
   }
+
+  if (!this.onLadder) {
+    this.climbingLadder = false;
+  }
+  if (this.climbingLadder) {
+    this.setPhysics('ladder');
+    var ladderAcceleration = 800;
+    if (cursors.up.isDown || cursors.w.isDown) {
+      this.sprite.body.velocity.y -= ladderAcceleration;
+      this.sprite.animations.play('climb');
+    } else if (cursors.down.isDown || cursors.s.isDown) {
+      this.sprite.body.velocity.y += ladderAcceleration;
+      this.sprite.animations.play('climbDown');
+    } else {
+      this.sprite.animations.stop()
+    }
+  }
 };
 
 Player.prototype.playSound = function (key, time, volume) {
@@ -210,6 +241,12 @@ Player.prototype.setPhysics = function (state) {
       this.sprite.body.drag.x = 2000;
       var climbingSpeed = 200;
       this.sprite.body.maxVelocity.y = climbingSpeed;
+      break;
+    case 'ladder':
+      var climbingSpeed = 200;
+      this.sprite.body.maxVelocity.y = climbingSpeed;
+      this.sprite.body.drag.y = 10000;
+      this.sprite.body.drag.x = 5000;
       break;
     case 'air':
       // Lack of Friction
@@ -251,7 +288,7 @@ function Tilemap(key, player) {
         }
         player[propName] = true;
         fallTimer = setTimeout(function () {
-          player.onVine = false;
+          player[propName] = false;
         }, 32);
       }, game, that[layerName]);
     }
@@ -360,6 +397,7 @@ Object.defineProperties(Level.prototype, {
             this.callbacks.create.call(this);
           }
           game.world.bringToTop(this.player.sprite);
+          game.world.bringToTop(this.map.stoneLedges);
         }.bind(this),
         update: function() {
           game.camera.follow(this.player.sprite);

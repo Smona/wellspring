@@ -30,7 +30,7 @@ function Tilemap(key, player) {
         }
         player[propName] = true;
         fallTimer = setTimeout(function () {
-          player.onVine = false;
+          player[propName] = false;
         }, 32);
       }, game, that[layerName]);
     }
