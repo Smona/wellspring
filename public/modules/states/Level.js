@@ -1,9 +1,7 @@
 var levels = [ ];
 var currentLevel = 0;
 
-function Level(width, height, name, customCallbacks) {
-  this.width = width;
-  this.height = height;
+function Level(name, customCallbacks) {
   this.name = name;
   this.callbacks = Object.assign({}, customCallbacks);
 }
@@ -19,9 +17,12 @@ Object.defineProperties(Level.prototype, {
           }
         }.bind(this),
         create: function () {
-          game.world.setBounds(0, 0, this.width, this.height);
-          this.player = new Player(game.world.centerX, game.world.height - 160);
+          this.player = new Player(0, 0);
           this.map = new Tilemap(this.name, this.player);
+          this.width = this.map.map.widthInPixels;
+          this.height = this.map.map.heightInPixels;
+          game.world.setBounds(0, 0, this.width, this.height);
+          this.player.sprite.position.setTo(game.world.centerX, game.world.height - 160);
           wellShader(game.world);
 
           var totalHeight = levels.slice(currentLevel, levels.length).
