@@ -40,11 +40,13 @@ function Tilemap(key, player) {
   map.addTilesetImage('stoneLedgeTile');
   map.addTilesetImage('wellBottom');
   map.addTilesetImage('wallTile');
+
   this.wellTiles = map.createLayer('wall');
   this.ledges = map.createLayer('grassLedge');
 
   setupLayer('vine', function() {
-    map.addTilesetImage('vineTile');
+    // map.addTilesetImage('vineTile');
+    map.addTilesetImage("vines");
   });
 
   setupLayer('ladder', function() {
