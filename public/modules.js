@@ -298,11 +298,13 @@ function Tilemap(key, player) {
   map.addTilesetImage('stoneLedgeTile');
   map.addTilesetImage('wellBottom');
   map.addTilesetImage('wallTile');
+
   this.wellTiles = map.createLayer('wall');
   this.ledges = map.createLayer('grassLedge');
 
   setupLayer('vine', function() {
     map.addTilesetImage('vineTile');
+    // map.addTilesetImage("vines");
   });
 
   setupLayer('ladder', function() {
@@ -512,8 +514,10 @@ var preload = {
     game.load.image('wellBottom','tilemaps/stoneledge.png');
     game.load.image('ladder','tilemaps/ladder.png');
     game.load.image('wallTile','tilemaps/wallTile.png');
-    game.load.image('vineTile', 'tilemaps/vineTile.png');
-    game.load.image('arrow_keys', 'sprites/keys.png');
+    game.load.image ("vineTile", "tilemaps/vines.png");
+    ///game.load.image('vineTile', 'tilemaps/vineTile.png');
+    game.load.image('arrow_keys', 'sprites/movekeys.png');
+    game.load.image("up_arrow", "sprites/up.png");
     game.load.image('sign', 'sprites/sign.png');
     game.load.image('victory_bg', 'sprites/landscape.png');
 
@@ -538,7 +542,7 @@ var victory = {
     player.sprite.scale.setTo(0.1);
   }
 };
-levels[0] = new Level('level0', {
+levels[0] = new Level(2048 * 3, 2400, 'level0', {
   create: function () {
     this.tut1 = game.add.group();
     var keys = game.add.sprite(camera.width / 2, camera.height / 2, 'arrow_keys');
@@ -565,20 +569,22 @@ levels[0] = new Level('level0', {
       this.tut1.removeChildren();
       this.tut1 = false;
     }
-    // if (!this.hasOwnProperty('tut2') && this.player.sprite.y < this.height - 300) {
-    //   this.tut2 = game.add.text(camera.width / 2, camera.height * 0.7,
-    //     'PRESS UP TO GRAB VINES', {
-    //     fontSize: '30px',
-    //     fill: 'white',
-    //     font: gameFont,
-    //   });
-    //   this.tut2.anchor.setTo(0.5);
-    //   this.tut2.fixedToCamera = true;
-    // }
-    // if (this.hasOwnProperty('tut2') && this.tut2 && this.player.climbingVines) {
-    //   this.tut2.kill();
-    //   this.tut2 = false;
-    // }
+    if (!this.hasOwnProperty('tut2') && this.player.sprite.y < this.height - 300) {
+      var keys = game.add.sprite(camera.width / 2, camera.height / 2, 'up_arrow');
+      keys.anchor.setTo(0.5);
+      this.tut2 = game.add.text(camera.width / 2, camera.height * 0.7,
+        'PRESS UP TO GRAB VINES', {
+        fontSize: '30px',
+        fill: 'white',
+        font: gameFont,
+      });
+      this.tut2.anchor.setTo(0.5);
+      this.tut2.fixedToCamera = true;
+    }
+    if (this.hasOwnProperty('tut2') && this.tut2 && this.player.climbingVines) {
+      this.tut2.kill();
+      this.tut2 = false;
+    }
   }
 });
 levels[1] = new Level('level1');

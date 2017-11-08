@@ -45,8 +45,8 @@ function Tilemap(key, player) {
   this.ledges = map.createLayer('grassLedge');
 
   setupLayer('vine', function() {
-    // map.addTilesetImage('vineTile');
-    map.addTilesetImage("vines");
+    map.addTilesetImage('vineTile');
+    // map.addTilesetImage("vines");
   });
 
   setupLayer('ladder', function() {
