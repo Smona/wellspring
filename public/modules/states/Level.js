@@ -1,9 +1,10 @@
 var levels = [ ];
 var currentLevel = 0;
 
-function Level(name, customCallbacks) {
-  this.name = name;
-  this.callbacks = Object.assign({}, customCallbacks);
+function Level(args) {
+  this.name = args.name;
+  this.tutorials = args.tutorials;
+  this.callbacks = Object.assign({}, args.hooks);
 }
 
 Object.defineProperties(Level.prototype, {
@@ -41,6 +42,7 @@ Object.defineProperties(Level.prototype, {
           }
         }.bind(this),
         create: function () {
+          // Setup world
           this.player = new Player(0, 0);
           this.map = new Tilemap(this.name, this.player);
           this.width = this.map.map.widthInPixels;
@@ -49,11 +51,19 @@ Object.defineProperties(Level.prototype, {
           this.player.sprite.position.setTo(game.world.centerX, game.world.height - 90);
           wellShader(game.world);
 
+          // Add depth sign
           var totalHeight = levels.slice(currentLevel, levels.length).
             reduce(function (total, current) {
               return total + current.height;
             }, 0);
           this.bottomSign = new DepthSign(game.world.centerX + 100, game.world.height - 130, totalHeight / 16);
+
+          // Initialize tutorials
+          if (this.tutorials) {
+            this.tutorials = this.tutorials.map(function (options) {
+              return new Tutorial(options);
+            })
+          }
 
           if (this.callbacks.hasOwnProperty('create')) {
             this.callbacks.create.call(this);
@@ -62,6 +72,13 @@ Object.defineProperties(Level.prototype, {
           game.world.bringToTop(this.map.stoneLedges);
         }.bind(this),
         update: function() {
+          this.tutorials = this.tutorials.filter(function (tut) {
+            var completed = tut.condition.call(this);
+            if (completed) {
+              tut.complete();
+            }
+            return !completed;
+          }.bind(this));
           game.camera.follow(this.player.sprite);
 
           // World Wrapping
