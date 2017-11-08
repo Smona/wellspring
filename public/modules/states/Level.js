@@ -35,7 +35,9 @@ Object.defineProperties(Level.prototype, {
             this.callbacks.create.call(this);
           }
           game.world.bringToTop(this.player.sprite);
-          game.world.bringToTop(this.map.stoneLedges);
+          game.world.bringToTop(this.map.stone);
+          game.world.bringToTop(this.map.ladder);
+
         }.bind(this),
         update: function() {
           game.camera.follow(this.player.sprite);
