@@ -39,7 +39,8 @@ var preload = {
     game.load.image('wellBottom','tilemaps/stoneledge.png');
     game.load.image('ladder','tilemaps/ladder.png');
     game.load.image('wallTile','tilemaps/wallTile.png');
-    game.load.image('vines', 'tilemaps/vines.png');
+    game.load.image ("vines", "tilemaps/vines.png");
+    game.load.image('vineTile', 'tilemaps/vineTile.png');
     game.load.image('arrow_keys', 'sprites/keys.png');
     game.load.image('sign', 'sprites/sign.png');
     game.load.image('victory_bg', 'sprites/landscape.png');
