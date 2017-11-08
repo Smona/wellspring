@@ -7,8 +7,13 @@ const modulesPath = './public/modules/*/*.js';
 const mapsPath = ['./public/tilemaps/*.json', '!./public/tilemaps/*-tripled.json'];
 
 gulp.task('scripts', function() {
-  return gulp.src(['./public/modules/classes/*.js', './public/modules/states/*.js', './public/modules/levels/*.js'])
-    .pipe(concat('modules.js'))
+  return gulp.src([
+      './public/modules/classes/*.js',
+      './public/modules/states/*.js',
+      './public/modules/levels/*.js',
+      './public/main.js'
+    ])
+    .pipe(concat('build.js'))
     .pipe(gulp.dest('./public/'));
 });
 

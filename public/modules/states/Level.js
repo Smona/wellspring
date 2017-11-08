@@ -7,6 +7,30 @@ function Level(name, customCallbacks) {
 }
 
 Object.defineProperties(Level.prototype, {
+  width: {
+    get: function () {
+      if (!this.hasOwnProperty('map')) {
+        var map = new Tilemap(this.name);
+        var width = map.map.widthInPixels;
+        map.destroy();
+        return width;
+      } else {
+        return this.map.map.widthInPixels;
+      }
+    }
+  },
+  height: {
+    get: function () {
+      if (!this.hasOwnProperty('map')) {
+        var map = new Tilemap(this.name);
+        var height = map.map.heightInPixels;
+        map.destroy();
+        return height;
+      } else {
+        return this.map.map.heightInPixels;
+      }
+    }
+  },
   state: {
     get: function () {
       return {

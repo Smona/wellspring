@@ -80,3 +80,17 @@ Tilemap.prototype.checkCollisions = function (body) {
   }
   game.physics.arcade.collide(body, this.wellBottom);
 };
+
+Tilemap.prototype.destroy = function () {
+  this.stoneLedges.destroy();
+  this.ledges.destroy();
+  this.wellBottom.destroy();
+  this.wellTiles.destroy();
+  if (this.vine) {
+    this.vine.destroy();
+  }
+  if (this.ladder) {
+    this.ladder.destroy();
+  }
+  this.map.destroy();
+};

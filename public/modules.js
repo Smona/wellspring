@@ -257,7 +257,7 @@ Player.prototype.setPhysics = function (state) {
 };
 
 function Tilemap(key, player) {
-  var map = game.add.tilemap(key);
+  var map = window.game.add.tilemap(key);
   var that = this;
   // Generate array of non-0 indexes
   var indexes = new Array(1000);
@@ -368,6 +368,9 @@ var currentLevel = 0;
 function Level(name, customCallbacks) {
   this.name = name;
   this.callbacks = Object.assign({}, customCallbacks);
+  var dimensionMap = new Tilemap(this.name);
+  this.width = dimensionMap.map.widthInPixels;
+  this.height = dimensionMap.map.heightInPixels;
 }
 
 Object.defineProperties(Level.prototype, {
