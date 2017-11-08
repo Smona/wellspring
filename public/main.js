@@ -1,4 +1,4 @@
-var startState = 'level1';
+var startState = 'menu';
 var camera = {
   width: 682,
   height: 400,
