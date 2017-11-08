@@ -6,7 +6,8 @@ function Tilemap(key, player) {
   map.addTilesetImage('wellBottom');
   map.addTilesetImage('ladder');
   map.addTilesetImage('wallTile');
-  map.addTilesetImage('vineTile');
+  ///map.addTilesetImage('vinesTile');
+  map.addTilesetImage("vines");
 
   this.wellTiles = map.createLayer('wall');
   this.ledges = map.createLayer('ledge');

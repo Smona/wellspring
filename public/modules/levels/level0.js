@@ -26,6 +26,8 @@ levels[0] = new Level(2048 * 3, 2400, 'level0', {
       this.tut1 = false;
     }
     if (!this.hasOwnProperty('tut2') && this.player.sprite.y < this.height - 300) {
+      var keys = game.add.sprite(camera.width / 2, camera.height / 2, 'up_arrow');
+      keys.anchor.setTo(0.5);
       this.tut2 = game.add.text(camera.width / 2, camera.height * 0.7,
         'PRESS UP TO GRAB VINES', {
         fontSize: '30px',
