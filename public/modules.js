@@ -469,7 +469,7 @@ menu = {
     wellShader(game.world);
   },
   update: function () {
-    game.camera.y = 6656 - camera.height - frame;
+    game.camera.y = game.world.height - camera.height - frame;
     frame++;
   },
 };
