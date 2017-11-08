@@ -53,7 +53,7 @@ Object.defineProperties(Level.prototype, {
             reduce(function (total, current) {
               return total + current.height;
             }, 0);
-          this.bottomSign = new DepthSign(game.world.centerX + 100, game.world.height - 100, totalHeight / 16);
+          this.bottomSign = new DepthSign(game.world.centerX + 100, game.world.height - 130, totalHeight / 16);
 
           if (this.callbacks.hasOwnProperty('create')) {
             this.callbacks.create.call(this);

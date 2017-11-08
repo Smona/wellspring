@@ -20,6 +20,7 @@ function Player(x, y) {
   // Prevent falling through ledges
   this.sprite.body.tilePadding.y = 20;
   this.falling = false;
+  this.fallingThreshold = 500;
   this.onVine = false;
   this.onLadder = false;
   this.climbingVines = false;
@@ -108,7 +109,7 @@ var vineSoundLoop = loopSound('climbVines', 600, 0.5);
 
 Player.prototype.update = function () {
   this.sprite.body.maxVelocity.setTo(this.baseSpeed, 800);
-  if (this.sprite.body.velocity.y > 500) {
+  if (this.sprite.body.velocity.y > this.fallingThreshold) {
     this.falling = true;
     this.fallingVelocity = this.sprite.body.velocity.y;
     this.sprite.animations.play('jump');
@@ -131,7 +132,7 @@ Player.prototype.update = function () {
     if (this.falling) {
       this.falling = false;
       this.playSound('fall', 0.2);
-      game.camera.shake(this.fallingVelocity * 0.0001, this.fallingVelocity * 0.3);
+      // game.camera.shake((this.fallingVelocity - this.fallingThreshold) * 0.0005, 200);
     }
 
     // On-ground animations

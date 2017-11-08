@@ -1,9 +1,11 @@
 levels[0] = new Level('level0', {
   create: function () {
     this.tut1 = game.add.group();
-    var keys = game.add.sprite(camera.width / 2, camera.height / 2, 'arrow_keys');
+    var space = game.add.sprite(camera.width / 2, camera.height * 0.25, 'space');
+    space.anchor.setTo(0.5);
+    var keys = game.add.sprite(camera.width / 2, camera.height * 0.3, 'arrow_keys');
     keys.anchor.setTo(0.5);
-    var text = game.add.text(camera.width / 2, camera.height * 0.7,
+    var text = game.add.text(camera.width / 2, camera.height * 0.5,
         'IF YOU WANT TO LIVE, MOVE', {
         fontSize: '30px',
         fill: 'white',
@@ -12,8 +14,7 @@ levels[0] = new Level('level0', {
     text.anchor.setTo(0.5);
     this.tut1.fixedToCamera = true;
 
-    this.tut1.add(text);
-    this.tut1.add(keys);
+    this.tut1.addMultiple([text, keys, space]);
 
     var caveNoise = game.add.audio('cave_noise');
     caveNoise.play(null, 0, 0.1, true);
