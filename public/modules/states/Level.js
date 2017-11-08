@@ -1,5 +1,5 @@
 var levels = [ ];
-var currentLevel = 1;
+var currentLevel = 0;
 
 function Level(name, customCallbacks) {
   this.name = name;
@@ -22,7 +22,7 @@ Object.defineProperties(Level.prototype, {
           this.width = this.map.map.widthInPixels;
           this.height = this.map.map.heightInPixels;
           game.world.setBounds(0, 0, this.width, this.height);
-          this.player.sprite.position.setTo(game.world.centerX, game.world.height - 160);
+          this.player.sprite.position.setTo(game.world.centerX, game.world.height - 90);
           wellShader(game.world);
 
           var totalHeight = levels.slice(currentLevel, levels.length).
