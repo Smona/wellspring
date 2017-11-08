@@ -4,3 +4,6 @@ build
 # Jetbrains config files
 .idea/
 .DS_Store
+
+modules.js
+*-tripled.json
