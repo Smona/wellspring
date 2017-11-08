@@ -1,11 +1,13 @@
+var fallTimer, ladderColliders;
+// Generate array of non-0 indexes
+var indexes = new Array(2000);
+for (var i = 0; i < indexes.length; i++) {
+  indexes[i] = i + 1;
+}
+
 function Tilemap(key, player) {
   var map = game.add.tilemap(key);
   var that = this;
-  // Generate array of non-0 indexes
-  var indexes = new Array(1000);
-  for (var i = 0; i < indexes.length; i++) {
-    indexes[i] = i + 1;
-  }
 
   function setupLayer(layerName, cb) {
     var hasLayer = map.layers.filter(function (layer) {
@@ -19,16 +21,16 @@ function Tilemap(key, player) {
   }
   function climbBehavior(layerName) {
     if (typeof player !== 'undefined') {
-      map.setCollisionByExclusion([0], true, that[layerName]);
+      map.setCollisionByExclusion([0], false, that[layerName]);
       var fallTimer;
       var propName = 'on' + layerName.charAt(0).toUpperCase() + layerName.slice(1);
 
       // Remove vine/player separation and add grabbing mechanic
-      map.setTileIndexCallback(indexes, function () {
+      map.setTileIndexCallback(indexes, function (playerSprite, tile) {
         if (!!fallTimer) {
           clearTimeout(fallTimer);
         }
-        player[propName] = true;
+        player[propName] = tile;
         fallTimer = setTimeout(function () {
           player[propName] = false;
         }, 32);
@@ -62,22 +64,23 @@ function Tilemap(key, player) {
   }
 
   this.map = map;
+  this.player = player;
 }
 
 Tilemap.prototype.checkCollisions = function (body) {
+  if (this.ladder) {
+    game.physics.arcade.collide(body, this.ladder);
+  }
+  if (this.vine) {
+    game.physics.arcade.collide(body, this.vine);
+  }
   game.physics.arcade.collide(body, this.ledges, null, function (collidedBody, ledge) {
     // Allows the player to jump through the bottom of ledges
     var colliding = ledge.collides &&
       collidedBody.position.y - collidedBody.body.height * collidedBody.anchor.y <=
       ledge.worldY - ledge.height + 40;
     return colliding;
-  });
-  if (this.vine) {
-    game.physics.arcade.collide(body, this.vine);
-  }
-  if (this.ladder) {
-    game.physics.arcade.collide(body, this.ladder);
-  }
+  }, this);
   game.physics.arcade.collide(body, this.wellBottom);
 };
 

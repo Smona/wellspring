@@ -43,6 +43,14 @@ function Player(x, y) {
   function grabLadder() {
     if (this.onLadder) {
       this.climbingLadder = true;
+      this.sprite.position.x = this.onLadder.worldX + this.onLadder.width / 4;
+      this.setPhysics('ladder')
+    }
+  }
+  function climbOffLedge () {
+    // TODO: disable for checkpoints
+    if (this.onGround && !this.climbingLadder) {
+      this.sprite.y += 20;
     }
   }
   cursors.jump.onDown.add(jumpBehavior, this);
@@ -50,6 +58,8 @@ function Player(x, y) {
   cursors.w.onDown.add(grabVines, this);
   cursors.up.onDown.add(grabLadder, this);
   cursors.w.onDown.add(grabLadder, this);
+  cursors.down.onDown.add(climbOffLedge, this);
+  cursors.s.onDown.add(climbOffLedge, this);
   cursors.down.onDown.add(grabLadder, this);
   cursors.s.onDown.add(grabLadder, this);
 
@@ -143,11 +153,6 @@ Player.prototype.update = function () {
       this.sprite.animations.play('rest');
     }
 
-    // Climbing down from a ledge
-    // TODO: disable for checkpoints
-    if (cursors.down.isDown) {
-      // this.sprite.y += 20;
-    }
   } else { // player is in the air
     this.setPhysics('air');
   }

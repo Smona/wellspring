@@ -32,6 +32,7 @@ gulp.task('default', ['scripts', 'tilemaps'], function() {
 
 gulp.task('watch', ['default'], function() {
   gulp.watch(modulesPath, ['scripts']);
+  gulp.watch('./public/main.js', ['scripts']);
   gulp.watch(mapsPath, ['tilemaps']);
   console.log('watching files');
 });
