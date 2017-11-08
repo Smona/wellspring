@@ -7,6 +7,8 @@ function Level(args) {
   this.callbacks = Object.assign({}, args.hooks);
 }
 
+// Width and height getters allow access to width and height
+// before level is initialized
 Object.defineProperties(Level.prototype, {
   width: {
     get: function () {
@@ -72,13 +74,22 @@ Object.defineProperties(Level.prototype, {
           game.world.bringToTop(this.map.stoneLedges);
         }.bind(this),
         update: function() {
+          // Check tutorials for creation
+          this.tutorials.forEach(function (tut) {
+            if (!tut.created && tut.begin.call(this)) {
+              tut.render();
+            }
+          }.bind(this));
+
+          // Check tutorials for completion
           this.tutorials = this.tutorials.filter(function (tut) {
-            var completed = tut.condition.call(this);
+            var completed = tut.created && tut.done.call(this);
             if (completed) {
               tut.complete();
             }
             return !completed;
           }.bind(this));
+
           game.camera.follow(this.player.sprite);
 
           // World Wrapping
@@ -98,6 +109,7 @@ Object.defineProperties(Level.prototype, {
             }
           }
 
+          // Action
           this.map.checkCollisions(this.player.sprite);
           this.player.update();
           if (this.callbacks.hasOwnProperty('update')) {

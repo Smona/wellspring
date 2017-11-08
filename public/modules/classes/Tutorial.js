@@ -8,21 +8,31 @@ var tutFont = {
 };
 
 function Tutorial(args) {
-  this.condition = args.condition;
+  this.done = args.end;
+  this.text = args.text || '';
+  this.sprites = args.sprites || false;
+  if (args.hasOwnProperty('begin')) {
+    this.begin = args.begin;
+    this.created = false;
+  } else {
+    this.render();
+  }
+}
+
+Tutorial.prototype.render = function () {
   var group = game.add.group();
 
   // Add tutorial text
-  if (args.hasOwnProperty('text')) {
-    var text = game.add.text(camera.width / 2, camera.height * 0.5,
-      args.text, tutFont);
-    text.anchor.setTo(0.5);
-    group.add(text);
-  }
+  var text = game.add.text(camera.width / 2, camera.height * 0.5,
+    this.text, tutFont);
+  text.anchor.setTo(0.5);
+  group.add(text);
 
   // Add tutorial sprites
-  if (args.hasOwnProperty('sprites')) {
-    Object.keys(args.sprites).forEach(function (key) {
-      var settings = args.sprites[key];
+  if (this.sprites) {
+    var sprites = this.sprites;
+    Object.keys(this.sprites).forEach(function (key) {
+      var settings = sprites[key];
       var x = settings.x || 0.5;
       var y = settings.y || 0.5;
       var sprite = game.add.sprite(camera.width * x, camera.height * y, key);
@@ -33,8 +43,11 @@ function Tutorial(args) {
 
   group.fixedToCamera = true;
   this.group = group;
-}
+  this.created = true;
+};
 
 Tutorial.prototype.complete = function () {
-  this.group.removeChildren();
+  if (this.hasOwnProperty('group')) {
+    this.group.removeChildren();
+  }
 };

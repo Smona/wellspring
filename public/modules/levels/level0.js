@@ -2,7 +2,7 @@ levels[0] = new Level({
   name: 'level0',
   tutorials: [
     {
-      condition: function () {
+      end: function () {
         return (cursors.up.isDown || cursors.left.isDown || cursors.right.isDown ||
           cursors.jump.isDown || cursors.a.isDown || cursors.d.isDown);
       },
