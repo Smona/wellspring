@@ -1,5 +1,5 @@
 var tutFont = {
-  fontSize: '30px',
+  fontSize: '25px',
   fill: 'white',
   font: gameFont,
   align: 'center',

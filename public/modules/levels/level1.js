@@ -2,7 +2,7 @@ levels[1] = new Level({
   name: 'level1',
   tutorials: [
     {
-      text: 'PRESS UP TO GRAB VINES AND LADDERS',
+      text: 'Press up to grab vines and ladders',
       end: function () {
         return this.player.climbingVines;
       },

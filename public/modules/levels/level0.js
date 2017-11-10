@@ -11,9 +11,6 @@ levels[0] = new Level({
         'arrow_keys': {
           y: 0.3
         },
-        space: {
-          y: 0.25
-        }
       }
     }
   ],
