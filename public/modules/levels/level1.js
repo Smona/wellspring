@@ -1,17 +1,17 @@
 levels[1] = new Level({
   name: 'level1',
   tutorials: [
-    {
-      text: 'Press up to grab vines and ladders',
-      end: function () {
-        return this.player.climbingVines;
-      },
-      sprites: {
-        'up_arrow': {
-          y: 0.4
-        }
-      }
-    },
+   // {
+   //   text: 'Press up to grab vines and ladders',
+   //   end: function () {
+   //     return this.player.climbingVines;
+   //   },
+   //   sprites: {
+   //     'up_arrow': {
+   //       y: 0.4
+   //     }
+   //   }
+   // },
     {
       text: 'THESE VINES SEEM STURDY ENOUGH TO JUMP OFF',
       begin: function () {
