@@ -19,7 +19,7 @@ levels[0] = new Level({
         return this.player.sprite.position.y < this.height - 200; //&& this.player.climbingVines;
       },
       end: function () {
-        return this.player.climbingVines;
+        return this.player.climbingLadder;
       },
       sprites: {
         'up_arrow': {
