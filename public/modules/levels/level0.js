@@ -14,7 +14,7 @@ levels[0] = new Level({
       }
     },
     {
-      text: 'Press up to grab vines and ladders',
+      text: 'Press up to grab the ladder',
       begin: function () {
         return this.player.sprite.position.y < this.height - 200; //&& this.player.climbingVines;
       },
@@ -24,7 +24,7 @@ levels[0] = new Level({
       sprites: {
         'up_arrow': {
           y: 0.4
-        }
+        },
       }
     },
   ],
