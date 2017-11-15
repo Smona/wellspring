@@ -76,20 +76,22 @@ Object.defineProperties(Level.prototype, {
         }.bind(this),
         update: function() {
           // Check tutorials for creation
-          this.tutorials.forEach(function (tut) {
-            if (!tut.created && tut.begin.call(this)) {
-              tut.render();
-            }
-          }.bind(this));
+          if (this.tutorials) {
+            this.tutorials.forEach(function (tut) {
+              if (!tut.created && tut.begin.call(this)) {
+                tut.render();
+              }
+            }.bind(this));
 
-          // Check tutorials for completion
-          this.tutorials = this.tutorials.filter(function (tut) {
-            var completed = tut.created && tut.done.call(this);
-            if (completed) {
-              tut.complete();
-            }
-            return !completed;
-          }.bind(this));
+            // Check tutorials for completion
+            this.tutorials = this.tutorials.filter(function (tut) {
+              var completed = tut.created && tut.done.call(this);
+              if (completed) {
+                tut.complete();
+              }
+              return !completed;
+            }.bind(this));
+          }
 
           game.camera.follow(this.player.sprite);
 
