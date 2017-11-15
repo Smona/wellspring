@@ -70,11 +70,11 @@ function Player(x, y) {
   this.sprite.animations.add('jump', [8,9, 10], 20);
   this.sprite.animations.add('climb', [12,13,14,15], 5, true);
   this.sprite.animations.add('climbDown', [15,14,13,12], 5, true);
-  //this.sprite.animations.add ("dance", [16, 17, 18, 19], 5, true);
-  //this.sprite.animations.add ("sit", [20, 21], 2, true);
-  //this.sprite.animations.add ("facePlant", [22, 23], 2, true);
-  //this.sprite.animations.add ("scooch", [24, 25, 26, 27, 28], 5, true);
-  //this.sprite.animations.add ("gettingUp", [29, 30, 31], 2, true);
+  this.sprite.animations.add ("dance", [16, 17, 18, 19], 5, true);
+  this.sprite.animations.add ("sit", [20, 21], 2, true);
+  this.sprite.animations.add ("facePlant", [22, 23], 2, true);
+  this.sprite.animations.add ("scooch", [24, 25, 26, 27, 28], 5, true);
+  this.sprite.animations.add ("gettingUp", [29, 30, 31], 2, true);
 
   // Sounds
   this.sounds = {
