@@ -39,8 +39,7 @@ function Tilemap(key, player) {
   }
 
   map.addTilesetImage('grassLedgeTile');
-  map.addTilesetImage('stone', 'stoneLedgeTile');
-  map.addTilesetImage('stone', 'wellBottom');
+  map.addTilesetImage('stoneLedgeTile');
   map.addTilesetImage('wellBottom');
   map.addTilesetImage('wallTile');
 
