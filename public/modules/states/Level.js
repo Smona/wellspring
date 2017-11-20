@@ -104,23 +104,26 @@ Object.defineProperties(Level.prototype, {
 
           // Level Completion
           if (this.player.sprite.y < 180 && !this.animation) {
-            if (currentLevel < levels.length - 1 ) {
-              var transition = game.add.graphics(0,0);
-              transition.beginFill(0, 0.1);
-              transition.drawRect(0,0,game.world.width,game.world.height);
-              var frame = 0;
-              this.animation = window.setInterval(function () {
-                transition.drawRect(0,0,game.world.width,game.world.height);
-                frame++;
-                if (frame >= 35) {
-                  window.clearInterval(this.animation);
+            var transition = game.add.graphics(0,0);
+            transition.beginFill(0, 0.1);
+            transition.drawRect(0,0,game.world.width,game.world.height);
+            var frame = 0;
+            function animation() {
+              if (frame >= 35) {
+                window.clearInterval(this.animation);
+                if (currentLevel < levels.length - 1 ) {
                   currentLevel++;
                   game.state.start(levels[currentLevel].name);
+                } else if (currentLevel = levels.length - 1) {
+                  game.state.start('victory');
                 }
-              }, 20);
-            } else if (currentLevel = levels.length - 1) {
-              game.state.start('victory');
+              } else {
+                transition.drawRect(0,0,game.world.width,game.world.height);
+                frame++;
+                this.animation = window.requestAnimationFrame(animation);
+              }
             }
+            this.animation = window.requestAnimationFrame(animation);
           }
 
           // Action
