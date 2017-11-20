@@ -154,7 +154,6 @@ Player.prototype.update = function () {
       //}
       //if (this.fallingVelocity > 30) {
         //this.sprite.animations.play ("facePlant");
-      }
     }
 
     // On-ground animations
