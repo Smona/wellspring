@@ -1,6 +1,8 @@
 var tutFont = {
   fontSize: '25px',
   fill: 'white',
+  strokeThickness: 2,
+  stroke: 'black',
   font: gameFont,
   align: 'center',
   wordWrap: true,
