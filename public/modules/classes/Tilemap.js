@@ -39,7 +39,8 @@ function Tilemap(key, player) {
   }
 
   map.addTilesetImage('grassLedgeTile');
-  map.addTilesetImage('stoneLedgeTile');
+  map.addTilesetImage('stone', 'stoneLedgeTile');
+  map.addTilesetImage('stone', 'wellBottom');
   map.addTilesetImage('wellBottom');
   map.addTilesetImage('wallTile');
 
@@ -48,7 +49,6 @@ function Tilemap(key, player) {
 
   setupLayer('vine', function() {
     map.addTilesetImage('vineTile');
-    // map.addTilesetImage("vines");
   });
 
   this.stoneLedges = map.createLayer('stoneLedge');
