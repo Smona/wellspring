@@ -148,6 +148,13 @@ Player.prototype.update = function () {
       this.falling = false;
       this.playSound('fall', 0.2);
       // game.camera.shake((this.fallingVelocity - this.fallingThreshold) * 0.0005, 200);
+      
+      //if (this.fallingThreshold < this.fallingVelocity < 30) {
+        //this.sprite.animations.play("sit");
+      //}
+      //if (this.fallingVelocity > 30) {
+        //this.sprite.animations.play ("facePlant");
+      }
     }
 
     // On-ground animations
