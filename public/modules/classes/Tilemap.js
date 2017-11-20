@@ -51,10 +51,6 @@ function Tilemap(key, player) {
     // map.addTilesetImage("vines");
   });
 
-  setupLayer('ladder', function() {
-    map.addTilesetImage('ladder');
-  });
-
   this.stoneLedges = map.createLayer('stoneLedge');
   this.wellBottom = map.createLayer('stone');
   if (typeof player !== 'undefined') {
@@ -62,6 +58,9 @@ function Tilemap(key, player) {
     map.setCollisionByExclusion([0], true, this.stoneLedges);
     map.setCollisionByExclusion([0], true, this.wellBottom);
   }
+  setupLayer('ladder', function() {
+    map.addTilesetImage('ladder');
+  });
 
   this.map = map;
   this.player = player;

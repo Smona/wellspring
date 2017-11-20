@@ -187,9 +187,6 @@ Player.prototype.update = function () {
     this.sprite.body.gravity.y = this.gravity;
   }
 
-  if (!this.onVine) {
-    this.climbingVines = false;
-  }
   if (this.climbingVines) {
     this.setPhysics('vines');
     var climbAcceleration = 80;
@@ -206,6 +203,13 @@ Player.prototype.update = function () {
       vineSoundLoop.call(this);
     } else {
       this.sprite.animations.stop()
+    }
+  }
+  if (!this.onVine && this.climbingVines) {
+    if (cursors.up.isDown || cursors.w.isDown) {
+      this.sprite.body.velocity.y = 0;
+    } else {
+      this.climbingVines = false;
     }
   }
 
@@ -244,7 +248,7 @@ Player.prototype.setPhysics = function (state) {
       this.sprite.body.drag.x = 2000;
       break;
     case 'vines':
-      this.sprite.body.drag.y = 1000;
+      this.sprite.body.drag.y = 1800;
       this.sprite.body.drag.x = 2000;
       var climbingSpeed = 200;
       this.sprite.body.maxVelocity.y = climbingSpeed;
