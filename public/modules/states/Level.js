@@ -5,6 +5,7 @@ function Level(args) {
   this.name = args.name;
   this.tutorials = args.tutorials;
   this.callbacks = Object.assign({}, args.hooks);
+  this.animation = false; // Level transition animation started
 }
 
 // Width and height getters allow access to width and height
@@ -84,7 +85,7 @@ Object.defineProperties(Level.prototype, {
 
             // Check tutorials for completion
             this.tutorials = this.tutorials.filter(function (tut) {
-              var completed = tut.created && tut.done.call(this);
+              var completed = tut.created && tut.end.call(this);
               if (completed) {
                 tut.complete();
               }
@@ -102,10 +103,21 @@ Object.defineProperties(Level.prototype, {
           }
 
           // Level Completion
-          if (this.player.sprite.y < 180) {
+          if (this.player.sprite.y < 180 && !this.animation) {
             if (currentLevel < levels.length - 1 ) {
-              currentLevel++;
-              game.state.start(levels[currentLevel].name);
+              var transition = game.add.graphics(0,0);
+              transition.beginFill(0, 0.1);
+              transition.drawRect(0,0,game.world.width,game.world.height);
+              var frame = 0;
+              this.animation = window.setInterval(function () {
+                transition.drawRect(0,0,game.world.width,game.world.height);
+                frame++;
+                if (frame >= 35) {
+                  window.clearInterval(this.animation);
+                  currentLevel++;
+                  game.state.start(levels[currentLevel].name);
+                }
+              }, 20);
             } else if (currentLevel = levels.length - 1) {
               game.state.start('victory');
             }

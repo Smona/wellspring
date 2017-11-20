@@ -8,7 +8,7 @@ var tutFont = {
 };
 
 function Tutorial(args) {
-  this.done = args.end;
+  this.end = args.end;
   this.text = args.text || '';
   this.sprites = args.sprites || false;
   if (args.hasOwnProperty('begin')) {
