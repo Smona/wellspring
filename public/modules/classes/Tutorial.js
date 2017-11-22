@@ -1,6 +1,8 @@
 var tutFont = {
   fontSize: '25px',
   fill: 'white',
+  strokeThickness: 2,
+  stroke: 'black',
   font: gameFont,
   align: 'center',
   wordWrap: true,
@@ -8,7 +10,7 @@ var tutFont = {
 };
 
 function Tutorial(args) {
-  this.done = args.end;
+  this.end = args.end;
   this.text = args.text || '';
   this.sprites = args.sprites || false;
   if (args.hasOwnProperty('begin')) {
