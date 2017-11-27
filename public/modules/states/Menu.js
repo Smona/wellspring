@@ -31,6 +31,8 @@ menu = {
     key2.onDown.add(startGame, this);
 
     wellShader(game.world);
+    var soundtrack = game.add.audio('soundtrack');
+    soundtrack.play(null, 0, 0.5, true);
   },
   update: function () {
     game.camera.y = game.world.height - camera.height - frame;
