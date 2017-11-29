@@ -5,6 +5,9 @@
 
 html {
     background: black;
+    font-family: 'Josefin Sans';
+    color: white;
+    font-size: calc(8vmin);
 }
 
 #game-root {
@@ -13,4 +16,71 @@ html {
     align-items: center;
     height: 100vh;
     width: 100vw;
+}
+
+#score-form {
+    position: absolute;
+    top: 40vh;
+    max-width: 90vmin;
+    height: 55vmin;
+    text-align: center;
+    overflow-y: auto;
+}
+#score-form table {
+    margin-right: 10px;
+}
+
+#score-form * {
+    margin: 0 auto;
+}
+#name-field {
+    min-width: 50px;
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid white;
+    padding-bottom: 0.2em;
+    margin-bottom: 0.5em;
+    font-size: 1em;
+    color: white;
+}
+#score-form label {
+    font-size: 0.5em;
+}
+#score-form button {
+    background: transparent;
+    border: 2px solid white;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s;
+    font-size: 1em;
+    color: white;
+}
+#score-form button:hover, #score-form button:focus {
+    background: rgba(255,255,255,0.3);
+}
+
+td:first-of-type {
+    text-align: right;
+    padding-right: 10px;
+}
+td:last-of-type {
+    text-align: left;
+    padding-left: 10px;
+}
+th {
+    position: sticky;
+    top: 0;
+}
+
+h1, th {
+    font-size: 1em;
+    text-align: center;
+}
+
+h1 {
+    position: absolute;
+    top: 20vh;
 }
