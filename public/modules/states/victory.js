@@ -1,5 +1,6 @@
 var victory = {
   create: function () {
+    game.input.keyboard.clearCaptures();
     var bg = game.add.sprite(0, 0, 'victory_bg');
     bg.scale.setTo(1.6);
     var player = new Player(camera.width * 0.3, camera.height * 0.9);
@@ -13,7 +14,8 @@ var victory = {
     var form = document.createElement('form');
     form.id = 'score-form';
     var header = document.createElement('h1');
-    header.appendChild(document.createTextNode('YOU ESCAPED IN ' + runtime / 1000 + ' SECONDS!'));
+    var displayTime = (runtime / 1000).toFixed(1);
+    header.appendChild(document.createTextNode('YOU ESCAPED IN ' + displayTime + ' SECONDS!'));
     root.appendChild(header);
     var input = document.createElement('input');
     input.setAttribute('size', '1');

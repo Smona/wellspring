@@ -1,4 +1,4 @@
-var startState = 'menu';
+var startState = 'victory';
 var camera = {
   width: 682,
   height: 400,
