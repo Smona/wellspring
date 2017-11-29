@@ -17,6 +17,7 @@ menu = {
 
     function startGame() {
       game.state.start('level0');
+      startTime = new Date().getTime();
     }
 
     var startButton = game.add.button(camera.width / 2, camera.height * 0.8,

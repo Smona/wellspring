@@ -3,6 +3,20 @@ var camera = {
   width: 682,
   height: 400,
 };
+var startTime;
+
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyBenRDTk0wrxZIXythU8DMWMzXxSjiLyx0",
+  authDomain: "wellspring-8cf13.firebaseapp.com",
+  databaseURL: "https://wellspring-8cf13.firebaseio.com",
+  projectId: "wellspring-8cf13",
+  storageBucket: "",
+  messagingSenderId: "406665721598"
+};
+firebase.initializeApp(config);
+// Initialize Cloud Firestore through Firebase
+var db = firebase.firestore().collection('highscores');
 
 var game = new Phaser.Game(camera.width, camera.height, Phaser.CANVAS, 'game-root');
 
