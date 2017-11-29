@@ -35,6 +35,8 @@ var preload = {
     game.load.tilemap('level1', 'tilemaps/level1-tripled.json',null,Phaser.Tilemap.TILED_JSON);
     game.load.tilemap('level2', 'tilemaps/level2-tripled.json',null,Phaser.Tilemap.TILED_JSON);
     game.load.tilemap('level3', 'tilemaps/level3-tripled.json',null,Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('level4', 'tilemaps/level4-tripled.json',null,Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('level5', 'tilemaps/level5-tripled.json',null,Phaser.Tilemap.TILED_JSON);
 
     game.load.image('grassLedgeTile','tilemaps/ledgeTile.png');
     game.load.image('stoneLedgeTile','tilemaps/stoneledgetiled.png');
