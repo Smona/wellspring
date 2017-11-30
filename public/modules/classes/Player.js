@@ -71,10 +71,10 @@ function Player(x, y) {
   this.sprite.animations.add('climb', [12,13,14,15], 5, true);
   this.sprite.animations.add('climbDown', [15,14,13,12], 5, true);
   this.sprite.animations.add ("dance", [16, 17, 18, 19], 5, true);
-  this.sprite.animations.add ("sit", [20, 21], 2, true);
-  this.sprite.animations.add ("facePlant", [22, 23], 2, true);
+  this.sprite.animations.add ("sit", [20, 21], playbackRate, false);
+  this.sprite.animations.add ("facePlant", [22, 23], 3, false);
   this.sprite.animations.add ("scooch", [24, 25, 26, 27, 28], 5, true);
-  this.sprite.animations.add ("gettingUp", [29, 30, 31], 2, true);
+  this.sprite.animations.add ("gettingUp", [29, 30, 31], 20, true);
 
   // Sounds
   this.sounds = {
@@ -143,25 +143,35 @@ Player.prototype.update = function () {
 
     this.setPhysics('ground');
 
+
+
     // Hitting the ground
     if (this.falling) {
       this.falling = false;
+      //window.setTimeout (function(..), delay in ms)
+      this.land = true;
+      setTimeout(function(){
+        this.land = false
+      }.bind(this), 300); //call to bind refers to the function so that it would call land
+
+      this.sprite.animations.play('sit');
+      console.log("sitting")
       this.playSound('fall', 0.2);
-      // game.camera.shake((this.fallingVelocity - this.fallingThreshold) * 0.0005, 200);
+
+      //game.camera.shake((this.fallingVelocity - this.fallingThreshold) * 0.0005, 200);
       
-      //if (this.fallingThreshold < this.fallingVelocity < 30) {
-        //this.sprite.animations.play("sit");
-      //}
       //if (this.fallingVelocity > 30) {
         //this.sprite.animations.play ("facePlant");
     }
 
+    if (!this.land){
     // On-ground animations
-    if (Math.abs(this.sprite.body.velocity.x) > 0.1) {
-      this.sprite.animations.play('run');
-      stepSoundLoop.call(this);
-    } else {
-      this.sprite.animations.play('rest');
+      if (Math.abs(this.sprite.body.velocity.x) > 0.1) {
+        this.sprite.animations.play('run');
+        stepSoundLoop.call(this);
+      } else { //making sure the landing animations dont get over ridden
+        this.sprite.animations.play('rest');
+      }
     }
 
   } else { // player is in the air
@@ -169,14 +179,16 @@ Player.prototype.update = function () {
   }
 
   // Running Left
-  if (cursors.left.isDown || cursors.a.isDown) {
-    this.sprite.body.velocity.x -= this.speed;
-    this.sprite.scale.setTo(-this.scale, this.scale);
-  }
-  // Running Right
-  if (cursors.right.isDown || cursors.d.isDown) {
-    this.sprite.body.velocity.x += this.speed;
-    this.sprite.scale.setTo(this.scale, this.scale);
+  if (!this.land){ 
+    if (cursors.left.isDown || cursors.a.isDown) {
+      this.sprite.body.velocity.x -= this.speed;
+      this.sprite.scale.setTo(-this.scale, this.scale);
+    }
+    // Running Right
+    if (cursors.right.isDown || cursors.d.isDown) {
+      this.sprite.body.velocity.x += this.speed;
+      this.sprite.scale.setTo(this.scale, this.scale);
+    }
   }
 
   // Variable height jump
@@ -235,8 +247,10 @@ Player.prototype.playSound = function (key, time, volume) {
 };
 
 Player.prototype.jump = function() {
-  this.sprite.body.velocity.y = -this.jumpPower;
-  this.sprite.animations.play('jump');
+  if (!this.land){
+    this.sprite.body.velocity.y = -this.jumpPower;
+    this.sprite.animations.play('jump');
+  }  
 };
 
 Player.prototype.setPhysics = function (state) {
