@@ -148,20 +148,37 @@ Player.prototype.update = function () {
     // Hitting the ground
     if (this.falling) {
       this.falling = false;
-      //window.setTimeout (function(..), delay in ms)
       this.land = true;
+      //window.setTimeout (function(..), delay in ms)
+      //setTimeout(function(){
+      //  this.land = false
+      //}.bind(this), 300); //call to bind refers to the function so that it would call land
+
+      //if (this.sprite.body.velocity.y > 600){
+      this.sprite.animations.play('sit');
+      console.log("sitting");
       setTimeout(function(){
         this.land = false
-      }.bind(this), 300); //call to bind refers to the function so that it would call land
+      }.bind(this), 300);
+      //}
 
-      this.sprite.animations.play('sit');
-      console.log("sitting")
-      this.playSound('fall', 0.2);
-
+      //if (this.sprite.body.velocity.y > 500){
+      //  this.sprite.animations.play("facePlant");
+      //  console.log(facePlant);
+      //  setTimeout(function(){
+      //    this.land = false
+      //  }.bind(this), 500);
+      //}
+      
+      //else {
+      //  setTimeout(function(){
+      //    this.land = false
+      //  }.bind(this), 0);
+      //}  
       //game.camera.shake((this.fallingVelocity - this.fallingThreshold) * 0.0005, 200);
       
-      //if (this.fallingVelocity > 30) {
-        //this.sprite.animations.play ("facePlant");
+      this.playSound('fall', 0.2);
+
     }
 
     if (!this.land){
