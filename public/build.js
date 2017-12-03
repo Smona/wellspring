@@ -165,24 +165,23 @@ Player.prototype.update = function () {
       this.falling = false;
       this.land = true;
       var getUpTime = 600;
-      console.log(this.fallingVelocity)
+      var me = this;
+
+      var getUp = function() {
+        setTimeout(function() {
+          me.sprite.animations.play('gettingUp').onComplete.addOnce(function() {
+            me.land = false;
+          });
+        }, getUpTime)
+      };
 
       if (this.fallingVelocity < 1000){
-        this.sprite.animations.play('sit');
-        console.log("sitting");
+        this.sprite.animations.play('sit').onComplete.addOnce(getUp);
       } else {
-       this.sprite.animations.play("facePlant");
-       console.log('facePlant');
+       this.sprite.animations.play("facePlant").onComplete.addOnce(getUp);
        getUpTime = 1200;
       }
 
-      setTimeout(function(){
-        this.sprite.animations.play('gettingUp');
-        setTimeout(function() {
-          this.land = false;
-        }.bind(this), 300);
-      }.bind(this), getUpTime);
-      
       //game.camera.shake((this.fallingVelocity - this.fallingThreshold) * 0.0005, 200);
       
       this.playSound('fall', 0.2);
