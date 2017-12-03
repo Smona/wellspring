@@ -26,8 +26,7 @@ function Player(x, y) {
   game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
   this.sprite.body.gravity.y = this.gravity;
   // Adjust body size to width of legs
-  var shrinkBodyWidth = playerSpriteWidth * 0.7;
-  this.sprite.body.setSize(playerSpriteWidth - shrinkBodyWidth, playerSpriteHeight, shrinkBodyWidth / 2, -50);
+  this.shrinkBodyWidth = playerSpriteWidth * 0.7;
   // Prevent falling through ledges
   this.sprite.body.tilePadding.y = 20;
   this.falling = false;
@@ -152,11 +151,16 @@ var vineSoundLoop = loopSound('climbVines', 600, 0.5);
 
 Player.prototype.update = function () {
   this.sprite.body.maxVelocity.setTo(this.baseSpeed, this.maxFallSpeed);
-  if (this.sprite.body.velocity.y > this.fallingThreshold) {
+  this.sprite.body.setSize(playerSpriteWidth - this.shrinkBodyWidth, 
+    playerSpriteHeight, this.shrinkBodyWidth / 2, -50);
+
+  if (this.sprite.body.velocity.y > this.fallingThreshold && 
+    !this.climbingVines && !this.climbingLadder) {
     this.falling = true;
     this.fallingVelocity = this.sprite.body.velocity.y;
     this.sprite.animations.play('jump');
   }
+
   // Player is standing on ground
   if (this.onGround) {
     // Stop climbing vines
@@ -170,8 +174,6 @@ Player.prototype.update = function () {
     }
 
     this.setPhysics('ground');
-
-
 
     // Hitting the ground
     if (this.falling) {
@@ -196,7 +198,6 @@ Player.prototype.update = function () {
       }
 
       //game.camera.shake((this.fallingVelocity - this.fallingThreshold) * 0.0005, 200);
-      
       this.playSound('fall', 0.2);
 
     }
@@ -237,6 +238,7 @@ Player.prototype.update = function () {
 
   if (this.climbingVines) {
     this.setPhysics('vines');
+    this.falling = false;
     var climbAcceleration = 80;
     if (cursors.up.isDown || cursors.w.isDown) {
       this.sprite.body.velocity.y -= climbAcceleration;
@@ -302,6 +304,9 @@ Player.prototype.setPhysics = function (state) {
       this.sprite.body.drag.x = 2000;
       var climbingSpeed = 200;
       this.sprite.body.maxVelocity.y = climbingSpeed;
+      this.sprite.body.setSize(playerSpriteWidth * 0.1, playerSpriteHeight * 0.1,
+        playerSpriteWidth * 0.5, playerSpriteHeight * 0.5
+      )
       break;
     case 'ladder':
       var climbingSpeed = 200;
