@@ -16,7 +16,7 @@ function Player(x, y) {
   this.jumpPower = 620;
   this.scale = 0.2;
   this.gravity = 1800;
-  this.maxFallSpeed = 1200;
+  this.maxFallSpeed = 1000;
   this.sprite = game.add.sprite(x, y, 'player');
   this.sprite.anchor.x = 0.5;
   this.sprite.anchor.y = 1;
