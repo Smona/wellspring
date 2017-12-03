@@ -6,7 +6,8 @@
   },
   "dependencies": {
     "concurrently": "^3.5.0",
-    "http-server": "^0.10.0"
+    "http-server": "^0.10.0",
+    "jscs": "^3.0.7"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

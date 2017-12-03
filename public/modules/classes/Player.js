@@ -2,11 +2,10 @@ var msToGrabVine = 300;
 
 function Player(x, y) {
   this.baseSpeed = 350;
-  // this.jumpPower = 725;
-  this.jumpPower = 650;
+  this.jumpPower = 620;
   this.scale = 0.2;
-  this.gravity = 1900;
-  this.maxFallSpeed = 900;
+  this.gravity = 1800;
+  this.maxFallSpeed = 1200;
   this.sprite = game.add.sprite(x, y, 'player');
   this.sprite.anchor.x = 0.5;
   this.sprite.anchor.y = 1;
@@ -21,7 +20,7 @@ function Player(x, y) {
   // Prevent falling through ledges
   this.sprite.body.tilePadding.y = 20;
   this.falling = false;
-  this.fallingThreshold = 700;
+  this.fallingThreshold = 760;
   this.onVine = false;
   this.onLadder = false;
   this.climbingVines = false;
@@ -73,9 +72,9 @@ function Player(x, y) {
   this.sprite.animations.add('climbDown', [15,14,13,12], 5, true);
   this.sprite.animations.add ("dance", [16, 17, 18, 19], 5, true);
   this.sprite.animations.add ("sit", [20, 21], 16, false);
-  this.sprite.animations.add ("facePlant", [22, 23], 3, false);
+  this.sprite.animations.add ("facePlant", [22, 23], 10, false);
   this.sprite.animations.add ("scooch", [24, 25, 26, 27, 28], 5, true);
-  this.sprite.animations.add ("gettingUp", [29, 30, 31], 20, true);
+  this.sprite.animations.add ("gettingUp", [29, 30, 31], 10, false);
 
   // Sounds
   this.sounds = {
@@ -150,32 +149,25 @@ Player.prototype.update = function () {
     if (this.falling) {
       this.falling = false;
       this.land = true;
-      //window.setTimeout (function(..), delay in ms)
-      //setTimeout(function(){
-      //  this.land = false
-      //}.bind(this), 300); //call to bind refers to the function so that it would call land
+      var getUpTime = 600;
+      console.log(this.fallingVelocity)
 
-      //if (this.sprite.body.velocity.y > 600){
-      this.sprite.animations.play('sit');
-      console.log("sitting");
+      if (this.fallingVelocity < 1000){
+        this.sprite.animations.play('sit');
+        console.log("sitting");
+      } else {
+       this.sprite.animations.play("facePlant");
+       console.log('facePlant');
+       getUpTime = 1200;
+      }
+
       setTimeout(function(){
-        this.land = false
-      }.bind(this), 800);
-      //}
-
-      //if (this.sprite.body.velocity.y > 500){
-      //  this.sprite.animations.play("facePlant");
-      //  console.log(facePlant);
-      //  setTimeout(function(){
-      //    this.land = false
-      //  }.bind(this), 500);
-      //}
+        this.sprite.animations.play('gettingUp');
+        setTimeout(function() {
+          this.land = false;
+        }.bind(this), 300);
+      }.bind(this), getUpTime);
       
-      //else {
-      //  setTimeout(function(){
-      //    this.land = false
-      //  }.bind(this), 0);
-      //}  
       //game.camera.shake((this.fallingVelocity - this.fallingThreshold) * 0.0005, 200);
       
       this.playSound('fall', 0.2);
@@ -279,7 +271,7 @@ Player.prototype.setPhysics = function (state) {
       this.sprite.body.drag.x = 2000;
       break;
     case 'vines':
-      this.sprite.body.drag.y = 1800;
+      this.sprite.body.drag.y = 1700;
       this.sprite.body.drag.x = 2000;
       var climbingSpeed = 200;
       this.sprite.body.maxVelocity.y = climbingSpeed;
