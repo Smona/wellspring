@@ -91,12 +91,25 @@ function Player(x, y) {
   this.sprite.animations.add ("scooch", [24, 25, 26, 27, 28], 5, true);
   this.sprite.animations.add ("gettingUp", [29, 30, 31], 10, false);
 
-  // Sounds
   this.sounds = {
-    fall: game.add.audio('grassFall'),
-    step: game.add.audio('grassStep', 0.1),
     climbVines: game.add.audio('vine_rustles'),
+    grass: game.add.audio('grass_step', 0.1),
+    grassFall: game.add.audio('grass_fall'),
+    stone: game.add.audio('stone_step', 0.5),
+    stoneFall: game.add.audio('stone_fall'),
   };
+  Object.defineProperties(this.sounds, {
+    step: {
+      get: function() {
+        return (this.on === 'stone') ? this.sounds.stone : this.sounds.grass;
+      }.bind(this),
+    },
+    fall: {
+      get: function() {
+        return (this.on === 'stone') ? this.sounds.stoneFall : this.sounds.grassFall;
+      }.bind(this),
+    },
+  })
 }
 
 Object.defineProperties(Player.prototype, {
@@ -378,14 +391,19 @@ Tilemap.prototype.checkCollisions = function (body) {
   if (this.vine) {
     game.physics.arcade.collide(body, this.vine);
   }
-  game.physics.arcade.collide(body, this.ledges, null, function (collidedBody, ledge) {
+  game.physics.arcade.collide(body, this.ledges, function() {
+    this.player.on = 'grass';
+  }, function (collidedBody, ledge) {
     // Allows the player to jump through the bottom of ledges
     var colliding = ledge.collides &&
       collidedBody.position.y - collidedBody.body.height * collidedBody.anchor.y <=
       ledge.worldY - ledge.height + 40;
     return colliding;
   }, this);
-  game.physics.arcade.collide(body, this.wellBottom);
+  game.physics.arcade.collide(body, this.wellBottom, function() {
+    console.log('stone');
+    this.player.on = 'stone';
+  }, null, this);
 };
 
 Tilemap.prototype.destroy = function () {
@@ -723,11 +741,13 @@ var preload = {
     //  Load the Google WebFont Loader script
     game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
-    game.load.audio('grassFall', 'audio/grass_fall.mp3');
-    game.load.audio('grassStep', 'audio/grass_step.mp3');
+    game.load.audio('grass_fall', 'audio/grass_fall.mp3');
+    game.load.audio('grass_step', 'audio/grass_step.mp3');
     game.load.audio('cave_noise', 'audio/cave_noise.mp3');
     game.load.audio('vine_rustles', 'audio/vine_rustles.mp3');
     game.load.audio('soundtrack', 'audio/wellspring.mp3');
+    game.load.audio('stone_step', 'audio/stone_step.mp3');
+    game.load.audio('stone_fall', 'audio/stone_fall.mp3');
   },
   create: function () {
     game.state.start(startState);

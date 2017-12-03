@@ -80,12 +80,25 @@ function Player(x, y) {
   this.sprite.animations.add ("scooch", [24, 25, 26, 27, 28], 5, true);
   this.sprite.animations.add ("gettingUp", [29, 30, 31], 10, false);
 
-  // Sounds
   this.sounds = {
-    fall: game.add.audio('grassFall'),
-    step: game.add.audio('grassStep', 0.1),
     climbVines: game.add.audio('vine_rustles'),
+    grass: game.add.audio('grass_step', 0.1),
+    grassFall: game.add.audio('grass_fall'),
+    stone: game.add.audio('stone_step', 0.5),
+    stoneFall: game.add.audio('stone_fall'),
   };
+  Object.defineProperties(this.sounds, {
+    step: {
+      get: function() {
+        return (this.on === 'stone') ? this.sounds.stone : this.sounds.grass;
+      }.bind(this),
+    },
+    fall: {
+      get: function() {
+        return (this.on === 'stone') ? this.sounds.stoneFall : this.sounds.grassFall;
+      }.bind(this),
+    },
+  })
 }
 
 Object.defineProperties(Player.prototype, {

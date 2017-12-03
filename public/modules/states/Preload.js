@@ -52,11 +52,13 @@ var preload = {
     //  Load the Google WebFont Loader script
     game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
-    game.load.audio('grassFall', 'audio/grass_fall.mp3');
-    game.load.audio('grassStep', 'audio/grass_step.mp3');
+    game.load.audio('grass_fall', 'audio/grass_fall.mp3');
+    game.load.audio('grass_step', 'audio/grass_step.mp3');
     game.load.audio('cave_noise', 'audio/cave_noise.mp3');
     game.load.audio('vine_rustles', 'audio/vine_rustles.mp3');
     game.load.audio('soundtrack', 'audio/wellspring.mp3');
+    game.load.audio('stone_step', 'audio/stone_step.mp3');
+    game.load.audio('stone_fall', 'audio/stone_fall.mp3');
   },
   create: function () {
     game.state.start(startState);

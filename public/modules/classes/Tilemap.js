@@ -72,14 +72,19 @@ Tilemap.prototype.checkCollisions = function (body) {
   if (this.vine) {
     game.physics.arcade.collide(body, this.vine);
   }
-  game.physics.arcade.collide(body, this.ledges, null, function (collidedBody, ledge) {
+  game.physics.arcade.collide(body, this.ledges, function() {
+    this.player.on = 'grass';
+  }, function (collidedBody, ledge) {
     // Allows the player to jump through the bottom of ledges
     var colliding = ledge.collides &&
       collidedBody.position.y - collidedBody.body.height * collidedBody.anchor.y <=
       ledge.worldY - ledge.height + 40;
     return colliding;
   }, this);
-  game.physics.arcade.collide(body, this.wellBottom);
+  game.physics.arcade.collide(body, this.wellBottom, function() {
+    console.log('stone');
+    this.player.on = 'stone';
+  }, null, this);
 };
 
 Tilemap.prototype.destroy = function () {
