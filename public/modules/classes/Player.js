@@ -6,6 +6,7 @@ function Player(x, y) {
   this.jumpPower = 650;
   this.scale = 0.2;
   this.gravity = 1900;
+  this.maxFallSpeed = 900;
   this.sprite = game.add.sprite(x, y, 'player');
   this.sprite.anchor.x = 0.5;
   this.sprite.anchor.y = 1;
@@ -20,7 +21,7 @@ function Player(x, y) {
   // Prevent falling through ledges
   this.sprite.body.tilePadding.y = 20;
   this.falling = false;
-  this.fallingThreshold = 500;
+  this.fallingThreshold = 700;
   this.onVine = false;
   this.onLadder = false;
   this.climbingVines = false;
@@ -71,7 +72,7 @@ function Player(x, y) {
   this.sprite.animations.add('climb', [12,13,14,15], 5, true);
   this.sprite.animations.add('climbDown', [15,14,13,12], 5, true);
   this.sprite.animations.add ("dance", [16, 17, 18, 19], 5, true);
-  this.sprite.animations.add ("sit", [20, 21], playbackRate, false);
+  this.sprite.animations.add ("sit", [20, 21], 16, false);
   this.sprite.animations.add ("facePlant", [22, 23], 3, false);
   this.sprite.animations.add ("scooch", [24, 25, 26, 27, 28], 5, true);
   this.sprite.animations.add ("gettingUp", [29, 30, 31], 20, true);
@@ -123,7 +124,7 @@ var stepSoundLoop = loopSound('step', 200);
 var vineSoundLoop = loopSound('climbVines', 600, 0.5);
 
 Player.prototype.update = function () {
-  this.sprite.body.maxVelocity.setTo(this.baseSpeed, 800);
+  this.sprite.body.maxVelocity.setTo(this.baseSpeed, this.maxFallSpeed);
   if (this.sprite.body.velocity.y > this.fallingThreshold) {
     this.falling = true;
     this.fallingVelocity = this.sprite.body.velocity.y;
@@ -159,7 +160,7 @@ Player.prototype.update = function () {
       console.log("sitting");
       setTimeout(function(){
         this.land = false
-      }.bind(this), 200);
+      }.bind(this), 800);
       //}
 
       //if (this.sprite.body.velocity.y > 500){
