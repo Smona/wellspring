@@ -378,6 +378,16 @@ function Tilemap(key, player) {
   this.wellBottom = map.createLayer('stone');
   if (typeof player !== 'undefined') {
     map.setCollisionByExclusion([0], true, this.ledges);
+    // Only collide top of grass ledges
+    this.ledges.layer.data.forEach(function(arr) {
+      arr.forEach(function(tile) {
+        if (tile.index >= 0) {
+          tile.collideLeft = false;
+          tile.collideRight = false;
+          tile.collideDown = false;
+        }
+      })
+    });
     map.setCollisionByExclusion([0], true, this.stoneLedges);
     map.setCollisionByExclusion([0], true, this.wellBottom);
   }
@@ -398,15 +408,8 @@ Tilemap.prototype.checkCollisions = function (body) {
   }
   game.physics.arcade.collide(body, this.ledges, function() {
     this.player.on = 'grass';
-  }, function (collidedBody, ledge) {
-    // Allows the player to jump through the bottom of ledges
-    var colliding = ledge.collides &&
-      collidedBody.position.y - collidedBody.body.height * collidedBody.anchor.y <=
-      ledge.worldY - ledge.height + 40;
-    return colliding;
-  }, this);
+  }, null, this);
   game.physics.arcade.collide(body, this.wellBottom, function() {
-    console.log('stone');
     this.player.on = 'stone';
   }, null, this);
 };
