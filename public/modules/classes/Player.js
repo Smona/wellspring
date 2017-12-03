@@ -159,7 +159,7 @@ Player.prototype.update = function () {
       console.log("sitting");
       setTimeout(function(){
         this.land = false
-      }.bind(this), 300);
+      }.bind(this), 200);
       //}
 
       //if (this.sprite.body.velocity.y > 500){
