@@ -52,9 +52,13 @@ function Player(x, y) {
     }
   }
   function grabLadder() {
-    if (this.onLadder) {
+    if (this.onLadder && !this.climbingLadder) {
+      var ladderOffset = this.onLadder.width / 4;
+      if (this.onLadder.index % 2 === 1) {
+        ladderOffset += this.onLadder.width / 2;
+      }
       this.climbingLadder = true;
-      this.sprite.position.x = this.onLadder.worldX + this.onLadder.width / 4;
+      this.sprite.position.x = this.onLadder.worldX + ladderOffset;
       this.setPhysics('ladder')
     }
   }
