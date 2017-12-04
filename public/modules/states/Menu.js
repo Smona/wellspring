@@ -2,6 +2,19 @@ var textStyle = {
   fill: 'white'
 };
 var frame = 0;
+var video;
+var sprite;
+
+intro = {
+  create: function(){
+    game.stage.backgroundColor = "#000000";
+    video = game.add.video ("introcut");
+    sprite = video.addToWorld(game.world.centerX, game.world.centerY, 0.5, 0.5, 2, 2);
+    video.play (false); //Dont loop the video
+  }
+}
+
+
 
 menu = {
   create: function () {

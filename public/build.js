@@ -656,6 +656,19 @@ var textStyle = {
   fill: 'white'
 };
 var frame = 0;
+var video;
+var sprite;
+
+intro = {
+  create: function(){
+    game.stage.backgroundColor = "#000000";
+    video = game.add.video ("introcut");
+    sprite = video.addToWorld(game.world.centerX, game.world.centerY, 0.5, 0.5, 2, 2);
+    video.play (false); //Dont loop the video
+  }
+}
+
+
 
 menu = {
   create: function () {
@@ -748,6 +761,7 @@ var preload = {
     //  Load the Google WebFont Loader script
     game.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
 
+    game.load.video ("introcut", "audio/introcut.mp4");
     game.load.audio('grass_fall', 'audio/grass_fall.mp3');
     game.load.audio('grass_step', 'audio/grass_step.mp3');
     game.load.audio('cave_noise', 'audio/cave_noise.mp3');
