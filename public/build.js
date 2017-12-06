@@ -63,7 +63,7 @@ function Player(x, y) {
   }
   function climbOffLedge () {
     // TODO: disable for checkpoints
-    if (this.onGround && !this.climbingLadder) {
+    if (this.onGround && !this.climbingLadder && this.on === 'grass') {
       this.sprite.y += 20;
     }
   }
@@ -87,8 +87,8 @@ function Player(x, y) {
   this.sprite.animations.add ("dance", [16, 17, 18, 19], 5, true);
   this.sprite.animations.add ("sit", [20, 21], 16, false);
   this.sprite.animations.add ("facePlant", [22, 23], 10, false);
-  this.sprite.animations.add ("scooch", [24, 25, 26, 27, 28], 5, true);
-  this.sprite.animations.add ("gettingUp", [29, 30, 31], 10, false);
+  //this.sprite.animations.add ("scooch", [24, 25, 26, 27, 28], 5, true);
+  this.sprite.animations.add ("gettingUp", [24, 25, 26], 10, false);
 
   this.sounds = {
     climbVines: game.add.audio('vine_rustles'),

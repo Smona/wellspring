@@ -52,7 +52,7 @@ function Player(x, y) {
   }
   function climbOffLedge () {
     // TODO: disable for checkpoints
-    if (this.onGround && !this.climbingLadder) {
+    if (this.onGround && !this.climbingLadder && this.on === 'grass') {
       this.sprite.y += 20;
     }
   }
