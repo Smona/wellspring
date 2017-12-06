@@ -243,11 +243,12 @@ Player.prototype.update = function () {
       this.sprite.animations.stop()
     }
   }
-  if (!this.onVine && this.climbingVines) {
+  if (!this.onVine) {
+    this.climbingVines = false;
+  }
+  if (this.onVine) {
     if (cursors.up.isDown || cursors.w.isDown) {
-      this.sprite.body.velocity.y = 0;
-    } else {
-      this.climbingVines = false;
+      this.climbingVines = true;
     }
   }
 
