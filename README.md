@@ -2,6 +2,8 @@
 A browser-based game, written in phaser by some UT students. You can play
 the game in its current state [here](https://smona.github.io/wellspring/public/).
 
+![Wellspring screenshot](https://i.imgur.com/XtkHTdt.png)
+
 ## Setup
 
 In order to set up the project for development:
