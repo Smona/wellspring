@@ -1,5 +1,5 @@
 # wellspring
-A browser-based game, written in phaser by some UT students. You can play
+A browser-based, wrap-around platformer about overcoming challenges. You can play
 the game in its current state [here](https://smona.github.io/wellspring/public/).
 
 ![Wellspring screenshot](https://i.imgur.com/XtkHTdt.png)
